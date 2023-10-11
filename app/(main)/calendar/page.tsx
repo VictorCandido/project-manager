@@ -8,6 +8,7 @@ import esLocale from '@fullcalendar/core/locales/pt-br';
 import { createRef, useEffect, useState } from 'react';
 import { DateSelectArg } from '@fullcalendar/core/index.js';
 import useWindowDimensions from '@/hooks/useWindowDimensions ';
+import { Button } from '@/components/ui/button';
 
 const CalendarPage = () => {
     const [domLoaded, setDomLoaded] = useState(false);
@@ -30,10 +31,16 @@ const CalendarPage = () => {
             end: date.end
         });
     }
+
+    function update() {
+        // Implementar para atualizar sempre que abrir e fechar sidebar
+        calendarRef.current?.getApi().updateSize();
+    }
     
 
     return (
         <div>
+            <Button onClick={() => update()}>Atualizar</Button>
             {domLoaded && (
                 <FullCalendar
                     height={height - 110}
@@ -43,6 +50,7 @@ const CalendarPage = () => {
                     navLinks
                     editable
                     displayEventTime
+                    expandRows
                     eventOrder={'start'}
                     ref={calendarRef} 
                     plugins={[ dayGridPlugin, interactionPlugin, timeGridPlugin ]}
