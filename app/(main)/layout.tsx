@@ -1,5 +1,5 @@
 import Navbar from "@/components/Navbar";
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "@/components/Sidebar/Sidebar";
 
 interface MainLayoutProps {
     children: React.ReactNode;
@@ -7,18 +7,31 @@ interface MainLayoutProps {
 
 const AuthLayout = ({ children }: MainLayoutProps) => {
     return (
-        <div className="h-full">
-            <Navbar />
+        // <section className="flex h-full">
+        <section className="">
+            <Sidebar>
+                <Navbar>
+                    { children }
+                </Navbar>
+            </Sidebar> 
 
-            <div className="h-full">
-                <Sidebar />
+
+
+
+
+
+
+
+
+
+            {/* <div className="h-full">
 
                 <div className="h-full ml-60 mt-16 p-5">
                     { children }
                 </div>
-            </div>
+            </div> */}
 
-        </div>
+        </section>
     );
 }
 

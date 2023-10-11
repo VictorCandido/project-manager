@@ -35,7 +35,7 @@ const CalendarPage = () => {
     return (
         <div>
             {domLoaded && (
-                <div>
+                <div className='h-[2000px]'>
                     <FullCalendar
                         ref={calendarRef} 
                         plugins={[ dayGridPlugin, interactionPlugin, timeGridPlugin ]}

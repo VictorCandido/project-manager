@@ -1,16 +1,24 @@
 import { ModeToggle } from "./ModeToggle";
 import { UserNav } from "./UserNav";
 
-const Navbar = () => {
+const Navbar = ({ children }: { children: React.ReactNode }) => {
     return (
-        <div className="flex h-16 w-full z-50 items-center px-4 border-b dark:border-zinc-700  dark:bg-zinc-800 bg-[#f2f3f5] fixed top-0">
-            PROJECT MANAGER (LOGO)
+        <div className="">
+            <div 
+                className="h-16 bg-blue-500 flex w-full items-center p-5 justify-between"
+            >
+                Page Title
 
-            <div className="ml-auto flex items-center space-x-4">
-                <ModeToggle />
-                <UserNav />
+                <div className="flex">
+                    <ModeToggle />
+                    <UserNav />
+                </div>
+                
             </div>
-            
+
+            <div className="h-full max-h-[calc(100vh-4rem)] overflow-auto p-5">
+                { children }
+            </div>
         </div>
     );
 }
