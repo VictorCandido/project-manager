@@ -1,15 +1,15 @@
-import { ModeToggle } from "./ModeToggle";
+import { ModeToggle } from "../ModeToggle";
 import { UserNav } from "./UserNav";
 
 const Navbar = ({ children }: { children: React.ReactNode }) => {
     return (
         <div className="">
             <div 
-                className="h-16 bg-blue-500 flex w-full items-center p-5 justify-between"
+                className="h-16 flex w-full items-center p-5 justify-between border-b bg-[#f2f3f5] dark:bg-zinc-800 border-zinc-300 dark:border-zinc-700"
             >
                 Page Title
 
-                <div className="flex">
+                <div className="flex gap-5">
                     <ModeToggle />
                     <UserNav />
                 </div>

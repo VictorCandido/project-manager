@@ -16,15 +16,19 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
     return (
         <div className="flex">
             <div 
-                className={`${open ? 'w-72' : 'w-16'} duration-300 bg-[#f2f3f5] dark:bg-zinc-800 min-h-screen text-zinc-100 px-4`}
+                className={`${open ? 'w-72' : 'w-16'} duration-300 bg-[#f2f3f5] dark:bg-zinc-800 min-h-screen px-4 border-r border-zinc-300 dark:border-zinc-700`}
             >
-                <div className="">
+                <div>
                     <div className="py-3 flex justify-end">
                         <AlignRight 
                             size={26} 
                             className="cursor-pointer" 
                             onClick={() => setOpen(!open)} 
                         />
+                    </div>
+
+                    <div className={`my-7 ${!open && 'hidden'}`}>
+                        PROJECT MANAGER (LOGO)
                     </div>
 
                     <div className="mt-4 flex flex-col gap-4 relative">
