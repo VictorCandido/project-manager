@@ -5,6 +5,8 @@ import type { Metadata } from 'next'
 import { Open_Sans } from 'next/font/google'
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
+import { NavigateProvider } from '@/contexts/NavigateContext';
+import { Providers } from '@/providers/providers';
 
 const font = Open_Sans({ subsets: ['latin'] });
 
@@ -29,7 +31,9 @@ export default function RootLayout({
             defaultTheme='dark'
             storageKey='project-manager'
           >
-            {children}
+            <Providers>
+              {children}
+            </Providers>
           </ThemeProvider>
         </body>
       </html>

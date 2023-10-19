@@ -5,19 +5,32 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import FullCalendar from "@fullcalendar/react";
 import esLocale from '@fullcalendar/core/locales/pt-br';
-import { createRef, useEffect, useState } from 'react';
+import { createRef, useContext, useEffect, useState } from 'react';
 import { DateSelectArg } from '@fullcalendar/core/index.js';
-import useWindowDimensions from '@/hooks/useWindowDimensions ';
+import useWindowDimensions from '@/hooks/useWindowDimensions';
 import { Button } from '@/components/ui/button';
+import { NavigateContext } from '@/contexts/NavigateContext';
 
 const CalendarPage = () => {
+    const { isOpenSidebar, setPage } = useContext(NavigateContext);
+    
     const [domLoaded, setDomLoaded] = useState(false);
     const calendarRef = createRef<FullCalendar>();
     const { height } = useWindowDimensions();
 
     useEffect(() => {
+        setPage({ key: 'agenda', title: 'Agenda' });
+    }, [setPage]);
+
+    useEffect(() => {
       setDomLoaded(true);
     }, []);
+
+    useEffect(() => {
+        setTimeout(() => {
+            calendarRef.current?.getApi().updateSize();
+        }, 300);
+    }, [isOpenSidebar, calendarRef]);
 
     function handleSelectDate(date: DateSelectArg) {
         console.log(date);
@@ -32,15 +45,9 @@ const CalendarPage = () => {
         });
     }
 
-    function update() {
-        // Implementar para atualizar sempre que abrir e fechar sidebar
-        calendarRef.current?.getApi().updateSize();
-    }
-    
-
     return (
         <div>
-            <Button onClick={() => update()}>Atualizar</Button>
+            {/* <Button onClick={() => update()}>Atualizar</Button> */}
             {domLoaded && (
                 <FullCalendar
                     height={height - 110}

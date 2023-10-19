@@ -1,5 +1,7 @@
+import { NavigateContext } from "@/contexts/NavigateContext";
 import MenuItemInterface from "@/interfaces/MenuItemInterface";
 import Link from "next/link";
+import { useContext } from "react";
 
 interface SidebarItemProps {
     menu: MenuItemInterface;
@@ -9,12 +11,18 @@ interface SidebarItemProps {
 
 
 const SidebarItem = ({ menu, index, open }: SidebarItemProps) => {
+    const { page } = useContext(NavigateContext);
+    
     return (
         <Link
             href={menu?.link} 
-            className="group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-zinc-600 rounded-md"
+            className={`group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-zinc-600 rounded-md ${menu.key === page.key && 'font-extrabold text-zinc-50 bg-zinc-700/50'}`}
         >
-            <div>{<menu.icon size={20}/>}</div>
+            <div>
+                {<menu.icon 
+                    size={20}
+                />}
+            </div>
             <h2 
                 style={{ transitionDelay: `${index + 1}00ms` }}
                 className={`whitespace-pre duration-300 ${!open && 'opacity-0 translate-x-14 overflow-hidden'}`}
