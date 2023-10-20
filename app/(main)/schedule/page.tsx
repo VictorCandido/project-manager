@@ -19,7 +19,7 @@ const CalendarPage = () => {
     const { height } = useWindowDimensions();
 
     useEffect(() => {
-        setPage({ key: 'agenda', title: 'Agenda' });
+        setPage({ key: 'schedule', title: 'Agenda' });
     }, [setPage]);
 
     useEffect(() => {
