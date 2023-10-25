@@ -45,6 +45,8 @@ const CalendarPage = () => {
         });
     }
 
+    if (!domLoaded) return 'Loading...';
+
     return (
         <div>
             {/* <Button onClick={() => update()}>Atualizar</Button> */}

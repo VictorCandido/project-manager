@@ -39,6 +39,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
     getSortedRowModel: getSortedRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
+    initialState: { columnVisibility: { 'id': false }  }
   })
 
   return (

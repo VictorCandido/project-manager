@@ -12,7 +12,6 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
     const menus: Array<MenuItemInterface> = [
         { key: 'home', name: 'Home', link: '/', icon: LayoutDashboard},
         { key: 'schedule', name: 'Agenda', link: '/schedule', icon: CalendarDays },
-        { key: 'customers', name: 'Clientes', link: '/customers', icon: Users2 },
         { key: 'projects', name: 'Projetos', link: '/projects', icon: FolderGit2 },
         { key: 'controlpanel', name: 'Painel de Controle', link: '/controlpanel', icon: Settings },
     ];
