@@ -26,7 +26,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
     return (
         <div className="flex">
             <div 
-                className={`${isOpenSidebar ? 'w-72' : 'w-16'} duration-300 bg-[#f2f3f5] dark:bg-zinc-800 min-h-screen px-4 border-r border-zinc-300 dark:border-zinc-700`}
+                className={`${isOpenSidebar ? 'w-72' : 'w-16'} duration-300 bg-background min-h-screen px-4 border-r border-zinc-300 dark:border-zinc-700`}
             >
                 <div className="flex flex-col justify-between h-full">
                     <div>
@@ -46,7 +46,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
                         </div>
                     </div>
 
-                    <div className="py-3 flex justify-end border border-t-zinc-400 dark:border-t-zinc-500">
+                    <div className="py-3 flex justify-end border-t">
                         <AlignRight 
                             size={26} 
                             className="cursor-pointer" 

@@ -11,7 +11,7 @@ const Navbar = ({ children }: { children: React.ReactNode }) => {
     return (
         <div className="">
             <div 
-                className="h-16 flex w-full items-center p-5 justify-between border-b bg-[#f2f3f5] dark:bg-zinc-800 border-zinc-300 dark:border-zinc-700"
+                className="h-16 flex w-full items-center p-5 justify-between border-b bg-background border"
             >
                 { page.title }
 
