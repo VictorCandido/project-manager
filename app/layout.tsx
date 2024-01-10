@@ -2,14 +2,13 @@ import { ClerkProvider } from '@clerk/nextjs'
 
 import './globals.css'
 import type { Metadata } from 'next'
-import { Roboto, Overlock_SC } from 'next/font/google'
+import { Roboto } from 'next/font/google'
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
-import { NavigateProvider } from '@/contexts/NavigateContext';
 import { Providers } from '@/providers/providers';
 
 const roboto = Roboto({
-  weight: '400',
+  weight: ['400', '700', '900'],
   subsets: ['latin'],
 });
 

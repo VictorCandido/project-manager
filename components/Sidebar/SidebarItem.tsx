@@ -16,7 +16,7 @@ const SidebarItem = ({ menu, index, open }: SidebarItemProps) => {
     return (
         <Link
             href={menu?.link} 
-            className={`group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-secondary dark:hover:bg-primary rounded-md ${menu.key === page.key && 'font-extrabold bg-secondary/30 dark:text-zinc-50 dark:bg-primary/50'}`}
+            className={`group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-secondary dark:hover:bg-primary rounded-md ${menu.key === page.key && 'font-bold bg-secondary/30 dark:text-zinc-50 dark:bg-primary/50'}`}
         >
             <div>
                 {<menu.icon 
