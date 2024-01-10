@@ -1,16 +1,23 @@
 "use client";
 
-import { AlignRight, CalendarDays, FolderGit2, LayoutDashboard, Settings, Users2 } from "lucide-react";
+import { AlignRight, Boxes, CalendarDays, ClipboardPenLine, FolderGit2, LayoutDashboard, Settings, Users2 } from "lucide-react";
 import { useContext } from "react";
 import SidebarItem from "./SidebarItem";
 import MenuItemInterface from "@/interfaces/MenuItemInterface";
 import { NavigateContext } from "@/contexts/NavigateContext";
+import { Salsa } from "next/font/google";
+
+const salsa = Salsa({
+    weight: '400',
+    subsets: ['latin'],
+  });
 
 const Sidebar = ({ children }: { children: React.ReactNode }) => {
     const { isOpenSidebar, setIsOpenSidebar } = useContext(NavigateContext);
 
     const menus: Array<MenuItemInterface> = [
         { key: 'home', name: 'Home', link: '/', icon: LayoutDashboard},
+        { key: 'appointments', name: 'Apontamentos', link: '/appointments', icon: ClipboardPenLine },
         { key: 'schedule', name: 'Agenda', link: '/schedule', icon: CalendarDays },
         { key: 'projects', name: 'Projetos', link: '/projects', icon: FolderGit2 },
         { key: 'controlpanel', name: 'Painel de Controle', link: '/controlpanel', icon: Settings },
@@ -23,8 +30,8 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
             >
                 <div className="flex flex-col justify-between h-full">
                     <div>
-                        <div className={`my-7 ${!isOpenSidebar && 'hidden'}`}>
-                            PROJECT MANAGER (LOGO)
+                        <div className={`my-7 flex gap-4 justify-center items-center`}>
+                            <Boxes size={30}/> <span className={`${salsa.className}  ${!isOpenSidebar && 'hidden'}`}>PROJECT MANAGER</span>
                         </div>
 
                         <div className="mt-4 flex flex-col gap-4 relative">

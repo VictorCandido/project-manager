@@ -2,13 +2,16 @@ import { ClerkProvider } from '@clerk/nextjs'
 
 import './globals.css'
 import type { Metadata } from 'next'
-import { Open_Sans } from 'next/font/google'
+import { Roboto, Overlock_SC } from 'next/font/google'
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
 import { NavigateProvider } from '@/contexts/NavigateContext';
 import { Providers } from '@/providers/providers';
 
-const font = Open_Sans({ subsets: ['latin'] });
+const roboto = Roboto({
+  weight: '400',
+  subsets: ['latin'],
+});
 
 export const metadata: Metadata = {
   title: 'Project Manager',
@@ -24,7 +27,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="pt-BR" suppressHydrationWarning>
         <body 
-          className={cn(font.className, 'bg-white dark:bg-[#313338]')}
+          className={cn(roboto.className, 'bg-white dark:bg-[#313338]')}
         >
           <ThemeProvider
             attribute='class'
