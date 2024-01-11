@@ -6,7 +6,8 @@ import { useContext, useEffect } from "react"
 
 import { DatePicker } from "@/components/Datepicker/Datepicker";
 import { Button } from "@/components/ui/button";
-import AppointmentCard from "@/components/AppointmentCard/AppointmentCard";
+import AppointmentDay from "@/components/Appointment/AppointmentDay";
+import AppointmentSkeleton from "@/components/Appointment/AppointmentDaySkeleton";
 
 
 
@@ -30,12 +31,9 @@ export default function PainelControle() {
 
     {/* CONTENT */}
     <div className="flex flex-col gap-4">
-      <h2 className="text-xl font-bold">01 de janeiro de 2024</h2>
+      <AppointmentSkeleton />
 
-      <AppointmentCard />
-      <AppointmentCard />
-      <AppointmentCard />
-      <AppointmentCard />
+      {/* <AppointmentDay /> */}
 
     </div>
    </div>
