@@ -13,7 +13,7 @@ const Navbar = ({ children }: { children: React.ReactNode }) => {
             <div 
                 className="h-16 flex w-full items-center p-5 justify-between border-b bg-background border"
             >
-                { page.title }
+                <span className="font-bold text-xl">{ page.title }</span>
 
                 <div className="flex gap-5">
                     <ModeToggle />

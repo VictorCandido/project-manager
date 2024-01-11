@@ -51,7 +51,8 @@ const NewAppointmentModal = () => {
     });
 
     function onSubmit(values: NewAppointmentType) {
-        console.log(values)
+        console.log(values);
+        onClose();
     }
 
     const handleClose = () => {
