@@ -8,11 +8,12 @@ import { DatePicker } from "@/components/Datepicker/Datepicker";
 import { Button } from "@/components/ui/button";
 import AppointmentDay from "@/components/Appointment/AppointmentDay";
 import AppointmentSkeleton from "@/components/Appointment/AppointmentDaySkeleton";
-
-
+import NewAppointmentModal from "@/components/Appointment/NewAppointmentModal";
+import { useModal } from "@/hooks/useModalStore";
 
 export default function PainelControle() {
   const { setPage } = useContext(NavigateContext);
+  const { onOpen } = useModal();
 
   useEffect(() => {
     setPage({ key: 'appointments', title: 'Apontamentos' });
@@ -24,16 +25,18 @@ export default function PainelControle() {
     <div className="flex justify-end gap-4">
       <DatePicker />
       
-      <Button className="gap-2">
+      {/* <NewAppointmentModal /> */}
+      <Button onClick={() => onOpen('newAppointment')}>
         <Plus /> Novo Apontamento
       </Button>
     </div>
 
     {/* CONTENT */}
     <div className="flex flex-col gap-4">
-      <AppointmentSkeleton />
 
-      {/* <AppointmentDay /> */}
+      {/* <AppointmentSkeleton /> */}
+
+      <AppointmentDay />
 
     </div>
    </div>

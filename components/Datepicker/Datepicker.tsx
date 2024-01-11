@@ -27,8 +27,8 @@ export function DatePicker() {
             !date && "text-muted-foreground"
           )}
         >
-          <CalendarIcon className="mr-2 h-4 w-4" />
           {date ? format(date, "PPP", { locale: ptBR }) : <span>Escolha uma data para filtrar</span>}
+          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">

@@ -6,6 +6,7 @@ import { Roboto } from 'next/font/google'
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
 import { Providers } from '@/providers/providers';
+import ModalsProvider from '@/components/providers/ModalsProvider';
 
 const roboto = Roboto({
   weight: ['400', '700', '900'],
@@ -34,6 +35,8 @@ export default function RootLayout({
             storageKey='project-manager'
           >
             <Providers>
+              <ModalsProvider />
+              
               {children}
             </Providers>
           </ThemeProvider>
