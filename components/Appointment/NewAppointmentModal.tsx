@@ -1,20 +1,43 @@
-import { CalendarIcon, CheckIcon, ChevronDown, Plus } from "lucide-react";
+import { CalendarIcon, CheckIcon, ChevronDown } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import axios from 'axios';
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale/pt-BR";
+import { useModal } from "@/hooks/useModalStore";
+import { useEffect, useState } from "react";
+import { Customer } from "@prisma/client";
 
 import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "../ui/textarea";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { cn } from "@/lib/utils";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "../ui/command";
-import { format } from "date-fns";
-import { ptBR } from "date-fns/locale/pt-BR";
 import { Calendar } from "../ui/calendar";
-import { useModal } from "@/hooks/useModalStore";
+import { 
+    Dialog, 
+    DialogContent, 
+    DialogDescription, 
+    DialogFooter, 
+    DialogHeader, 
+    DialogTitle, 
+} from "@/components/ui/dialog"
+import { 
+    Form, 
+    FormControl, 
+    FormField, 
+    FormItem, 
+    FormLabel, 
+    FormMessage 
+} from "@/components/ui/form"
+import { 
+    Command, 
+    CommandEmpty, 
+    CommandGroup, 
+    CommandInput, 
+    CommandItem 
+} from "../ui/command";
 
 const formSchema = z.object({
     customer: z.string().min(1, 'Informe o cliente.'),
@@ -26,15 +49,9 @@ const formSchema = z.object({
 
 type NewAppointmentType = z.infer<typeof formSchema>;
 
-const customers = [
-    { id: '1', name: 'Francal', },
-    { id: '2', name: 'SEBRAE', },
-    { id: '3', name: 'Colares Linhares', },
-    { id: '4', name: 'Iv2 - Tech Leader', },
-    { id: '5', name: 'Iv2 - Arquitetura', },
-]
-
 const NewAppointmentModal = () => {
+    const [customers, setCustomers] = useState<Customer[]>([]);
+    const [customersLoading, setCustomersLoading] = useState<boolean>(false);
     const { isOpen, onClose, type } = useModal();
 
     const isModalOpen = isOpen && type === 'newAppointment';
@@ -55,9 +72,20 @@ const NewAppointmentModal = () => {
         onClose();
     }
 
-    const handleClose = () => {
+    function handleClose() {
         form.reset();
         onClose();
+    }
+
+    async function loadCustomers(isOpen: boolean) {
+        setCustomers(new Array());
+        setCustomersLoading(true);
+
+        if (isOpen) {
+            const customerData = await axios.get<Customer[]>('/api/customer');
+            setCustomers(customerData.data);
+            setCustomersLoading(false);
+        }
     }
 
     function formatTime(timeString: string) {
@@ -158,7 +186,7 @@ const NewAppointmentModal = () => {
                                 <FormItem className="flex flex-col">
                                     <FormLabel>Cliente</FormLabel>
 
-                                    <Popover>
+                                    <Popover onOpenChange={loadCustomers}>
                                         <PopoverTrigger asChild>
                                             <FormControl>
                                                 <Button
@@ -185,7 +213,7 @@ const NewAppointmentModal = () => {
                                                     className="h-9"
                                                 />
 
-                                                <CommandEmpty>Nenhum cliente encontrado.</CommandEmpty>
+                                                <CommandEmpty>{customersLoading ? 'Carregando...' : 'Nenhum cliente encontrado.'}</CommandEmpty>
 
                                                 <CommandGroup>
                                                     {customers.map((customer) => (
