@@ -26,9 +26,10 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <html lang="pt-BR" suppressHydrationWarning>
+      <html lang="pt-BR">
         <body 
           className={cn(roboto.className, 'bg-white bg-background')}
+          suppressHydrationWarning
         >
           <ThemeProvider
             attribute='class'

@@ -9,6 +9,7 @@ import { useModal } from "@/hooks/useModalStore";
 import { useState } from "react";
 import { Appointment, Customer } from "@prisma/client";
 import { toast } from "sonner"
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -40,7 +41,6 @@ import {
     CommandItem 
 } from "../ui/command";
 import ResponseModel from "@/models/ResponseModel";
-import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
     customer: z.string().min(1, 'Informe o cliente.'),
@@ -55,6 +55,7 @@ type NewAppointmentType = z.infer<typeof formSchema>;
 const NewAppointmentModal = () => {
     const [customers, setCustomers] = useState<Customer[]>([]);
     const [customersLoading, setCustomersLoading] = useState<boolean>(false);
+
     const { isOpen, onClose, type } = useModal();
     const router = useRouter();
 

@@ -15,8 +15,6 @@ interface AppointmentCardProps {
 }
 
 const AppointmentCard = ({ data }: AppointmentCardProps) => {
-    console.log(data)
-
     return (
         <Card>
             <CardHeader>
@@ -24,17 +22,17 @@ const AppointmentCard = ({ data }: AppointmentCardProps) => {
                 <CardDescription>{data.start} - {data.end}</CardDescription>
             </CardHeader>
             <CardContent>
-                <div>{data.description}</div>
+                {data.description}
             </CardContent>
             <CardFooter>
                 <div className="flex gap-4 justify-end w-full">
-                <Button className="gap-2">
-                <Pen /> Editar
-                </Button>
+                    <Button className="gap-2">
+                        <Pen /> Editar
+                    </Button>
 
-                <Button className="gap-2" variant="destructive">
-                <Trash2 /> Remover
-                </Button>
+                    <Button className="gap-2" variant="destructive">
+                        <Trash2 /> Remover
+                    </Button>
                 </div>
             </CardFooter>
         </Card>

@@ -8,10 +8,9 @@ interface AppointmentDayProps {
 const AppointmentDay = ({ data }: AppointmentDayProps) => {
     return (
         <>
-
             {data.map((appointment, index) => (
-                <>
-                    <h2 className="text-xl font-bold">
+                <div key={index}>
+                    <h2 className="text-xl font-bold mb-4">
                         {new Date(appointment.date)
                             .toLocaleDateString('pt-BR', { 
                                 year: 'numeric', 
@@ -21,11 +20,9 @@ const AppointmentDay = ({ data }: AppointmentDayProps) => {
                     </h2>
 
                     <AppointmentCard 
-                        key={index}
                         data={appointment}
                     />
-                </>
-
+                </div>
             ))}
         </>
     );

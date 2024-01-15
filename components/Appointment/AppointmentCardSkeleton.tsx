@@ -5,12 +5,8 @@ const AppointmentCardSkeleton = () => {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>
-                    <Skeleton className="h-6 w-52"/>
-                </CardTitle>
-                <CardDescription>
-                    <Skeleton className="h-4 w-20"/>
-                </CardDescription>
+                <Skeleton className="h-6 w-52"/>
+                <Skeleton className="h-4 w-20"/>
             </CardHeader>
             <CardContent className="flex flex-col gap-2">
                 <Skeleton className="h-4 w-full"/>

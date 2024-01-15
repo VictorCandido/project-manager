@@ -17,14 +17,23 @@ import { AppointmentCustormerProps } from "@/types/AppointmentCustormerProps";
 export default function PainelControle() {
   const [appointments, setAppointments] = useState<AppointmentCustormerProps[]>([]);
   const [appointmentsLoading, setAppointmentsLoading] = useState<boolean>(false);
+  
   const { setPage } = useContext(NavigateContext);
-  const { onOpen } = useModal();
+  const { onOpen, isOpen } = useModal();
 
   useEffect(() => {
+    console.log('##### carregou')
+
     setPage({ key: 'appointments', title: 'Apontamentos' });
 
     loadAppointments();
   }, [setPage]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      loadAppointments();
+    }
+  }, [isOpen]);
 
   async function loadAppointments() {
     setAppointmentsLoading(true);
