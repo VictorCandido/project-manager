@@ -25,9 +25,9 @@ model Appointment {
   date        DateTime
   start       String
   end         String
-  description String
+  description String   @db.Text
 
-  custumer   Customer @relation(fields: [customerId], references: [id])
+  customer   Customer @relation(fields: [customerId], references: [id])
   customerId String
 
   createdAt DateTime @default(now())

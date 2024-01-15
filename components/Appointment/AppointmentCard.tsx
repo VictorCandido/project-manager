@@ -8,16 +8,23 @@ import {
 } from "@/components/ui/card"
 import { Button } from "../ui/button";
 import { Pen, Trash2 } from "lucide-react";
+import { AppointmentCustormerProps } from "@/types/AppointmentCustormerProps";
 
-const AppointmentCard = () => {
+interface AppointmentCardProps {
+    data: AppointmentCustormerProps;
+}
+
+const AppointmentCard = ({ data }: AppointmentCardProps) => {
+    console.log(data)
+
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Francal</CardTitle>
-                <CardDescription>08:30 - 16:00</CardDescription>
+                <CardTitle>{data.customer.name}</CardTitle>
+                <CardDescription>{data.start} - {data.end}</CardDescription>
             </CardHeader>
             <CardContent>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc maximus, nulla ut commodo sagittis, sapien dui mattis dui, non pulvinar lorem felis nec erat Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc maximus, nulla ut commodo sagittis, sapien dui mattis dui, non pulvinar lorem felis nec erat Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc maximus, nulla ut commodo sagittis, sapien dui mattis dui, non pulvinar lorem felis nec erat</p>
+                <div>{data.description}</div>
             </CardContent>
             <CardFooter>
                 <div className="flex gap-4 justify-end w-full">

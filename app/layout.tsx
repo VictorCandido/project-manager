@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
 import { Providers } from '@/providers/providers';
 import ModalsProvider from '@/components/providers/ModalsProvider';
+import { Toaster } from '@/components/ui/sonner';
 
 const roboto = Roboto({
   weight: ['400', '700', '900'],
@@ -40,6 +41,8 @@ export default function RootLayout({
               {children}
             </Providers>
           </ThemeProvider>
+
+          <Toaster richColors expand position="top-right" />
         </body>
       </html>
     </ClerkProvider>

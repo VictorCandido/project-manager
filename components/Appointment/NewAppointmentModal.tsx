@@ -1,4 +1,4 @@
-import { CalendarIcon, CheckIcon, ChevronDown } from "lucide-react";
+import { CalendarIcon, CheckIcon, ChevronDown, Loader2 } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -6,8 +6,9 @@ import axios from 'axios';
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale/pt-BR";
 import { useModal } from "@/hooks/useModalStore";
-import { useEffect, useState } from "react";
-import { Customer } from "@prisma/client";
+import { useState } from "react";
+import { Appointment, Customer } from "@prisma/client";
+import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -38,6 +39,8 @@ import {
     CommandInput, 
     CommandItem 
 } from "../ui/command";
+import ResponseModel from "@/models/ResponseModel";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
     customer: z.string().min(1, 'Informe o cliente.'),
@@ -53,8 +56,7 @@ const NewAppointmentModal = () => {
     const [customers, setCustomers] = useState<Customer[]>([]);
     const [customersLoading, setCustomersLoading] = useState<boolean>(false);
     const { isOpen, onClose, type } = useModal();
-
-    const isModalOpen = isOpen && type === 'newAppointment';
+    const router = useRouter();
 
     const form = useForm<NewAppointmentType>({
         resolver: zodResolver(formSchema),
@@ -67,9 +69,25 @@ const NewAppointmentModal = () => {
         },
     });
 
-    function onSubmit(values: NewAppointmentType) {
-        console.log(values);
-        onClose();
+    const isModalOpen = isOpen && type === 'newAppointment';
+    const isLoading = form.formState.isSubmitting;
+
+    async function onSubmit(values: NewAppointmentType) {
+        try {
+            const { data } = await axios.post<ResponseModel<Appointment>>('/api/appointment', values);
+            
+            if (data.error) {
+                throw data.data;
+            }
+    
+            toast.success('Apontamento criado com sucesso.');
+            form.reset();
+            router.refresh();
+            onClose();
+        } catch (error) {
+            console.log('Falha ao registrar apontamento - ', error);
+            toast.error('Falha ao registrar apontamento. Por favor tente novamente.');
+        }
     }
 
     function handleClose() {
@@ -78,14 +96,25 @@ const NewAppointmentModal = () => {
     }
 
     async function loadCustomers(isOpen: boolean) {
-        setCustomers(new Array());
-        setCustomersLoading(true);
-
-        if (isOpen) {
-            const customerData = await axios.get<Customer[]>('/api/customer');
-            setCustomers(customerData.data);
-            setCustomersLoading(false);
+        try {
+            if (isOpen) {
+                setCustomers(new Array());
+                setCustomersLoading(true);
+        
+                const { data: responseData } = await axios.get<ResponseModel<Customer[]>>('/api/customer');
+    
+                if (responseData.error) {
+                    throw responseData.data;
+                }
+                
+                setCustomers(responseData.data);
+            }
+        } catch (error) {
+            console.log('Falha ao consultar clientes - ', error);
+            toast.error('Falha ao consultar clientes. Por favor tente novamente.');
         }
+        
+        setCustomersLoading(false);
     }
 
     function formatTime(timeString: string) {
@@ -198,8 +227,9 @@ const NewAppointmentModal = () => {
                                                     )}    
                                                 >
                                                     {field.value 
-                                                        ? customers.find((customer) => customer.id === field.value)?.name 
+                                                        ? customers.find((customer) => customer.id === field.value)?.name
                                                         : 'Selecione um cliente'}
+
 
                                                     <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50"/>
                                                 </Button>
@@ -218,7 +248,7 @@ const NewAppointmentModal = () => {
                                                 <CommandGroup>
                                                     {customers.map((customer) => (
                                                         <CommandItem
-                                                            value={customer.name}
+                                                            value={customer.id}
                                                             key={customer.id}
                                                             onSelect={() => {
                                                                 form.setValue('customer', customer.id);
@@ -353,7 +383,10 @@ const NewAppointmentModal = () => {
                         />
                        
                         <DialogFooter>
-                            <Button type="submit">Salvar</Button>
+                            <Button type="submit" disabled={isLoading}>
+                                <Loader2 className={`h-4 w-4 animate-spin mr-2 ${!isLoading && 'hidden'}`}/>
+                                Salvar
+                            </Button>
                         </DialogFooter>
                     </form>
                 </Form>
