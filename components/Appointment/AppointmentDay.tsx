@@ -8,13 +8,24 @@ interface AppointmentDayProps {
 const AppointmentDay = ({ data }: AppointmentDayProps) => {
     return (
         <>
-            <h2 className="text-xl font-bold">01 de janeiro de 2024</h2>
 
             {data.map((appointment, index) => (
-                <AppointmentCard 
-                    key={index}
-                    data={appointment}
-                />
+                <>
+                    <h2 className="text-xl font-bold">
+                        {new Date(appointment.date)
+                            .toLocaleDateString('pt-BR', { 
+                                year: 'numeric', 
+                                month: 'long', 
+                                day: 'numeric' 
+                            })}
+                    </h2>
+
+                    <AppointmentCard 
+                        key={index}
+                        data={appointment}
+                    />
+                </>
+
             ))}
         </>
     );

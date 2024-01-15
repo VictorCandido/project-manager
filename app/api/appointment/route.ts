@@ -7,7 +7,10 @@ export async function GET(req: Request) {
     let response: ResponseModel<Appointment | any>;
     
     try {
-        const appointments = await db.appointment.findMany({ include: { customer: true }});
+        const appointments = await db.appointment.findMany({ 
+            include: { customer: true },
+            orderBy: { date: 'desc' }
+        });
         
         response = new ResponseModel(false, CodeResponseEnum.OK, 'OK', appointments);
     } catch (error) {
