@@ -16,6 +16,7 @@ import { AppointmentCustormerProps } from "@/types/AppointmentCustormerProps";
 
 export default function PainelControle() {
   const [appointments, setAppointments] = useState<AppointmentCustormerProps[]>([]);
+  const [appointmentsLoading, setAppointmentsLoading] = useState<boolean>(false);
   const { setPage } = useContext(NavigateContext);
   const { onOpen } = useModal();
 
@@ -26,6 +27,8 @@ export default function PainelControle() {
   }, [setPage]);
 
   async function loadAppointments() {
+    setAppointmentsLoading(true);
+
     try {
       const { data } = await axios.get<ResponseModel<AppointmentCustormerProps[]>>('/api/appointment');
 
@@ -38,6 +41,8 @@ export default function PainelControle() {
       console.log('Falha ao consultar apontamentos - ', error);
       toast.error('Falha ao consultar apontamentos. Por favor tente novamente.');
     }
+
+    setAppointmentsLoading(false);
   }
 
   return (
@@ -55,7 +60,13 @@ export default function PainelControle() {
     {/* CONTENT */}
     <div className="flex flex-col gap-4">
 
-      { appointments.length ? <AppointmentDay data={appointments}/> : <AppointmentSkeleton /> }
+      {
+        appointmentsLoading 
+        ? <AppointmentSkeleton />
+        : appointments.length
+        ? <AppointmentDay data={appointments}/>
+        : 'Nenhum apontamento encontrado...'
+      }
 
     </div>
    </div>
