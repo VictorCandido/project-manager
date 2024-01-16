@@ -1,8 +1,6 @@
-import { NavigateContext } from "@/contexts/NavigateContext";
 import MenuItemInterface from "@/interfaces/MenuItemInterface";
 import Link from "next/link";
-import { useContext } from "react";
-
+import { useSelectedLayoutSegment } from "next/navigation";
 interface SidebarItemProps {
     menu: MenuItemInterface;
     index: number;
@@ -11,28 +9,29 @@ interface SidebarItemProps {
 
 
 const SidebarItem = ({ menu, index, open }: SidebarItemProps) => {
-    const { page } = useContext(NavigateContext);
+    const segment = useSelectedLayoutSegment();
     
     return (
         <Link
             href={menu?.link} 
-            className={`group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-secondary dark:hover:bg-primary rounded-md ${menu.key === page.key && 'font-bold bg-secondary/30 dark:text-zinc-50 dark:bg-primary/50'}`}
+            className={`
+                group flex items-center text-sm py-2 px-3
+                font-medium hover:bg-secondary rounded-md mt-4
+                ${menu.key === segment && 'font-bold bg-secondary dark:text-zinc-50'} 
+                ${!open && 'justify-center'}`}
         >
-            <div>
-                {<menu.icon 
-                    size={20}
-                />}
-            </div>
-            <h2 
-                style={{ transitionDelay: `${index + 1}00ms` }}
-                className={`whitespace-pre duration-300 ${!open && 'opacity-0 translate-x-14 overflow-hidden'}`}
-            >
+            {<menu.icon size={20}/>}
+
+            <h2 className={`${open ? 'w-52 ml-3' : 'w-0 h-0'} overflow-hidden transition-all`}>
                 { menu?.name }
             </h2>
 
-            <h2 className={`${open && 'hidden'} absolute left-28 bg-white font-semibold whitespace-pre text-zinc-900 rounded-md drop-shadow-lg group-hover:px-2 w-0 overflow-hidden group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit`}>
-                { menu?.name }
-            </h2>
+
+            {!open && (
+                <h2 className={`absolute left-28 bg-white font-semibold whitespace-pre text-zinc-900 rounded-md drop-shadow-lg group-hover:px-2 w-0 overflow-hidden group-hover:py-1 group-hover:left-16 group-hover:duration-300 group-hover:w-fit`}>
+                    { menu?.name }
+                </h2>
+            )}
         </Link> 
     );
 }

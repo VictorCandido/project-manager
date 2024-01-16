@@ -9,9 +9,9 @@ const AuthLayout = ({ children }: MainLayoutProps) => {
     return (
         <section className="">
             <Sidebar>
-                <Navbar>
+                <div className="h-full max-h-[calc(100vh-4rem)] overflow-auto p-5">
                     { children }
-                </Navbar>
+                </div>
             </Sidebar> 
         </section>
     );

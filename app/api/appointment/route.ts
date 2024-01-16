@@ -14,9 +14,8 @@ export async function GET(req: Request) {
             orderBy: { date: 'desc' },
         });
 
-        
-        
-        response = new ResponseModel(false, CodeResponseEnum.OK, 'OK', _.groupBy(appointments, 'date'));
+        // response = new ResponseModel(false, CodeResponseEnum.OK, 'OK', _.groupBy(appointments, 'date'));
+        response = new ResponseModel(false, CodeResponseEnum.OK, 'OK', appointments);
     } catch (error) {
         console.log('[ERROR] GET Appointment - ', error);
         response = new ResponseModel(true, CodeResponseEnum.INTERNAL_ERROR, 'Falha ao listar apontamentos', error);

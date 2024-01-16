@@ -12,16 +12,12 @@ import { Button } from '@/components/ui/button';
 import { NavigateContext } from '@/contexts/NavigateContext';
 
 const CalendarPage = () => {
-    const { isOpenSidebar, setPage } = useContext(NavigateContext);
+    const { isOpenSidebar } = useContext(NavigateContext);
     
     const [domLoaded, setDomLoaded] = useState(false);
     const calendarRef = createRef<FullCalendar>();
     const { height } = useWindowDimensions();
-
-    useEffect(() => {
-        setPage({ key: 'schedule', title: 'Agenda' });
-    }, [setPage]);
-
+    
     useEffect(() => {
       setDomLoaded(true);
     }, []);

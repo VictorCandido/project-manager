@@ -1,8 +1,7 @@
 "use client";
 
-import { NavigateContext } from "@/contexts/NavigateContext"
 import { Plus } from "lucide-react";
-import { useContext, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import axios from "axios";
 import { useModal } from "@/hooks/useModalStore";
 import { toast } from "sonner";
@@ -18,16 +17,11 @@ export default function PainelControle() {
   const [appointments, setAppointments] = useState<AppointmentCustormerProps[]>([]);
   const [appointmentsLoading, setAppointmentsLoading] = useState<boolean>(false);
   
-  const { setPage } = useContext(NavigateContext);
   const { onOpen, isOpen } = useModal();
 
   useEffect(() => {
-    console.log('##### carregou')
-
-    setPage({ key: 'appointments', title: 'Apontamentos' });
-
     loadAppointments();
-  }, [setPage]);
+  }, []);
 
   useEffect(() => {
     if (!isOpen) {
@@ -57,13 +51,23 @@ export default function PainelControle() {
   return (
    <div>
     {/* HEADER */}
-    <div className="flex justify-end gap-4">
-      <DatePicker />
-      
-      {/* <NewAppointmentModal /> */}
-      <Button onClick={() => onOpen('newAppointment')}>
-        <Plus /> Novo Apontamento
-      </Button>
+    <div className="flex justify-between mb-5">
+      <div className="space-y-0.5">
+        <h2 className="text-2xl font-bold tracking-tight">Apontamentos</h2>
+        
+        <p className="text-muted-foreground">
+          Consulte os apontamentos realizados ou registre um novo.
+        </p>
+      </div>
+
+      <div className="flex justify-end gap-4">
+        <DatePicker />
+        
+        {/* <NewAppointmentModal /> */}
+        <Button onClick={() => onOpen('newAppointment')}>
+          <Plus /> Novo Apontamento
+        </Button>
+      </div>
     </div>
 
     {/* CONTENT */}

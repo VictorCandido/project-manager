@@ -9,7 +9,6 @@ import { useModal } from "@/hooks/useModalStore";
 import { useState } from "react";
 import { Appointment, Customer } from "@prisma/client";
 import { toast } from "sonner"
-import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -57,7 +56,6 @@ const NewAppointmentModal = () => {
     const [customersLoading, setCustomersLoading] = useState<boolean>(false);
 
     const { isOpen, onClose, type } = useModal();
-    const router = useRouter();
 
     const form = useForm<NewAppointmentType>({
         resolver: zodResolver(formSchema),
@@ -83,7 +81,6 @@ const NewAppointmentModal = () => {
     
             toast.success('Apontamento criado com sucesso.');
             form.reset();
-            router.refresh();
             onClose();
         } catch (error) {
             console.log('Falha ao registrar apontamento - ', error);

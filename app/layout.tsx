@@ -15,8 +15,7 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: 'Project Manager',
-  description: 'Gestor de Projestos customizado by Victor Candido',
+  title: "GESTOR"
 }
 
 export default function RootLayout({

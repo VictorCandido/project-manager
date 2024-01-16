@@ -1,11 +1,13 @@
 "use client";
 
-import { AlignRight, Boxes, CalendarDays, ClipboardPenLine, FolderGit2, LayoutDashboard, Settings, Users2 } from "lucide-react";
+import { AlignRight, Boxes, ChevronLeft, ChevronRight, ChevronRightCircle } from "lucide-react";
 import { useContext } from "react";
 import SidebarItem from "./SidebarItem";
-import MenuItemInterface from "@/interfaces/MenuItemInterface";
 import { NavigateContext } from "@/contexts/NavigateContext";
 import { Salsa } from "next/font/google";
+import { menuItems } from "@/utils/menuItems";
+import { ModeToggle } from "../ModeToggle";
+import { UserButton } from "@clerk/nextjs";
 
 const salsa = Salsa({
     weight: '400',
@@ -15,46 +17,60 @@ const salsa = Salsa({
 const Sidebar = ({ children }: { children: React.ReactNode }) => {
     const { isOpenSidebar, setIsOpenSidebar } = useContext(NavigateContext);
 
-    const menus: Array<MenuItemInterface> = [
-        { key: 'home', name: 'Home', link: '/', icon: LayoutDashboard},
-        { key: 'appointments', name: 'Apontamentos', link: '/appointments', icon: ClipboardPenLine },
-        { key: 'schedule', name: 'Agenda', link: '/schedule', icon: CalendarDays },
-        { key: 'projects', name: 'Projetos', link: '/projects', icon: FolderGit2 },
-        { key: 'controlpanel', name: 'Painel de Controle', link: '/controlpanel', icon: Settings },
-    ];
-
     return (
         <div className="flex">
-            <div 
-                className={`${isOpenSidebar ? 'w-72' : 'w-16'} duration-300 bg-background min-h-screen px-4 border-r border-zinc-300 dark:border-zinc-700`}
-            >
-                <div className="flex flex-col justify-between h-full">
-                    <div>
-                        <div className={`my-7 flex gap-4 justify-center items-center`}>
-                            <Boxes size={30}/> <span className={`${salsa.className}  ${!isOpenSidebar && 'hidden'}`}>PROJECT MANAGER</span>
+            <div className='bg-background flex flex-col min-h-screen border-r relative shadow-sm'>
+                {/* LOGO */}
+                <div className="p-5 flex justify-center items-center bg-secondary">
+                    <button
+                        className="bg-secondary text-3xl rounded-full absolute -right-3 top-9 border border-zinc-300 dark:border-zinc-700 cursor-pointer" 
+                        onClick={() => setIsOpenSidebar(!isOpenSidebar)} 
+                    >
+                        {isOpenSidebar ? <ChevronLeft /> : <ChevronRight />}
+                    </button>
+
+                    <Boxes size={30}/> <span className={`${salsa.className} ${isOpenSidebar ? 'w-36 ml-4' : 'w-0 h-0'} overflow-hidden transition-all`}>PROJECT MANAGER</span>
+                </div>
+
+                {/* MENU */}
+                <div className="flex-1 px-3 mt-4">
+                    { menuItems?.map((menu, index) => (
+                        <SidebarItem 
+                            key={index} 
+                            menu={menu}
+                            index={index}
+                            open={isOpenSidebar}
+                        />     
+                    )) }
+                </div>
+
+                {/* FOOTER */}
+                <div className="flex border-t p-4">
+                    <UserButton 
+                        afterSignOutUrl="/" 
+                        appearance={{
+                            elements: { 
+                                avatarBox: 'h-10 w-10 rounded-md',
+                                userButtonTrigger: 'rounded-md'
+                            }
+                        }}
+                    />
+
+                    <div className={`
+                        flex justify-between items-center 
+                        overflow-hidden transition-all 
+                        ${isOpenSidebar ? 'w-52 ml-3' : 'w-0'}
+                    `}>
+                        <div className="leading-4">
+                            <h4 className="font-semibold">Víctor Cândido</h4>
+                            <span className="text-xs text-gray-600 dark:text-gray-400">victorev@outlook.com</span>
                         </div>
 
-                        <div className="mt-4 flex flex-col gap-4 relative">
-                            { menus?.map((menu, index) => (
-                                <SidebarItem 
-                                    key={index} 
-                                    menu={menu}
-                                    index={index}
-                                    open={isOpenSidebar}
-                                />     
-                            )) }
+                        <div className={`${!isOpenSidebar && 'hidden'}`}>
+                            <ModeToggle />
                         </div>
-                    </div>
-
-                    <div className="py-3 flex justify-end border-t">
-                        <AlignRight 
-                            size={26} 
-                            className="cursor-pointer" 
-                            onClick={() => setIsOpenSidebar(!isOpenSidebar)} 
-                        />
                     </div>
                 </div>
-                
             </div>
 
             <div className="w-full">

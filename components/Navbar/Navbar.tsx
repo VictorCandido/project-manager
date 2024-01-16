@@ -1,19 +1,21 @@
 "use client";
 
-import { useContext } from "react";
 import { ModeToggle } from "../ModeToggle";
 import { UserNav } from "./UserNav";
-import { NavigateContext } from "@/contexts/NavigateContext";
+import { useSelectedLayoutSegment } from "next/navigation";
+import { menuItems } from "@/utils/menuItems";
 
 const Navbar = ({ children }: { children: React.ReactNode }) => {
-    const { page } = useContext(NavigateContext);
+    const segment = useSelectedLayoutSegment();
+
+    const title = menuItems.find(item => item.key === segment)?.name;
 
     return (
         <div className="">
             <div 
                 className="h-16 flex w-full items-center p-5 justify-between border-b bg-background"
             >
-                <span className="font-bold text-xl">{ page.title }</span>
+                <span className="font-bold text-xl">{ title }</span>
 
                 <div className="flex gap-5">
                     <ModeToggle />

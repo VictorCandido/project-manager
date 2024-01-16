@@ -1,8 +1,6 @@
 "use client";
 
 import { DataTable } from "@/components/Datatable/Datatable";
-import { NavigateContext } from "@/contexts/NavigateContext"
-import { useContext, useEffect } from "react"
 
 import { ColumnDef } from "@tanstack/react-table"
 
@@ -156,12 +154,6 @@ const tasks = [
 
 
 export default function Projetos() {
-  const { setPage } = useContext(NavigateContext);
-
-  useEffect(() => {
-    setPage({ key: 'projects', title: 'Projetos' });
-  }, [setPage]);
-
   return (
     <div className="hidden h-full flex-1 flex-col space-y-8 md:flex">
       <DataTable data={tasks} columns={columns} />
