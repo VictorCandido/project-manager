@@ -63,7 +63,7 @@ const NewAppointmentModal = () => {
         resolver: zodResolver(formSchema),
         defaultValues: {
           customer: '',
-          date: new Date(),
+          date: getDateWhithoutHours(),
           start: '',
           end: '',
           description: '',
@@ -116,6 +116,12 @@ const NewAppointmentModal = () => {
         }
         
         setCustomersLoading(false);
+    }
+
+    function getDateWhithoutHours() {
+        const dateNow = new Date();
+        const dateString = `${dateNow.getFullYear()}-${dateNow.getMonth() + 1}-${dateNow.getDate()}`;
+        return new Date(dateString); 
     }
 
     function formatTime(timeString: string) {
@@ -306,7 +312,7 @@ const NewAppointmentModal = () => {
                                                     <Calendar
                                                         mode="single"
                                                         selected={form.getValues('date')}
-                                                        onSelect={(value) => form.setValue('date', value || new Date())}
+                                                        onSelect={(value) => form.setValue('date', value || getDateWhithoutHours())}
                                                         locale={ptBR}
                                                         initialFocus
                                                     />

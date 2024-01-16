@@ -2,6 +2,8 @@ import { db } from "@/lib/db";
 import ResponseModel, { CodeResponseEnum } from "@/models/ResponseModel";
 import { Appointment } from "@prisma/client";
 import { NextResponse } from "next/server";
+import _ from 'lodash';
+
 
 export async function GET(req: Request) {
     let response: ResponseModel<Appointment | any>;
@@ -9,10 +11,12 @@ export async function GET(req: Request) {
     try {
         const appointments = await db.appointment.findMany({ 
             include: { customer: true },
-            orderBy: { date: 'desc' }
+            orderBy: { date: 'desc' },
         });
+
         
-        response = new ResponseModel(false, CodeResponseEnum.OK, 'OK', appointments);
+        
+        response = new ResponseModel(false, CodeResponseEnum.OK, 'OK', _.groupBy(appointments, 'date'));
     } catch (error) {
         console.log('[ERROR] GET Appointment - ', error);
         response = new ResponseModel(true, CodeResponseEnum.INTERNAL_ERROR, 'Falha ao listar apontamentos', error);
