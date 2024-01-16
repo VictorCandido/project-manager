@@ -21,7 +21,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
         <div className="flex">
             <div className='bg-background flex flex-col min-h-screen border-r relative shadow-sm'>
                 {/* LOGO */}
-                <div className="p-5 flex justify-center items-center bg-secondary">
+                <div className="p-5 flex justify-center items-center">
                     <button
                         className="bg-secondary text-3xl rounded-full absolute -right-3 top-9 border border-zinc-300 dark:border-zinc-700 cursor-pointer" 
                         onClick={() => setIsOpenSidebar(!isOpenSidebar)} 
@@ -33,7 +33,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
                 </div>
 
                 {/* MENU */}
-                <div className="flex-1 px-3 mt-4">
+                <div className="flex-1 px-3">
                     { menuItems?.map((menu, index) => (
                         <SidebarItem 
                             key={index} 
