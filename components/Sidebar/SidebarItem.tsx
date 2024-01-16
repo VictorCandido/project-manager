@@ -7,7 +7,6 @@ interface SidebarItemProps {
     open: boolean;
 }
 
-
 const SidebarItem = ({ menu, index, open }: SidebarItemProps) => {
     const segment = useSelectedLayoutSegment();
     

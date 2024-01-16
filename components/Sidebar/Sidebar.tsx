@@ -1,12 +1,12 @@
 "use client";
 
-import { AlignRight, Boxes, ChevronLeft, ChevronRight, ChevronRightCircle } from "lucide-react";
+import { Boxes, ChevronLeft, ChevronRight } from "lucide-react";
 import { useContext } from "react";
 import SidebarItem from "./SidebarItem";
 import { NavigateContext } from "@/contexts/NavigateContext";
 import { Salsa } from "next/font/google";
 import { menuItems } from "@/utils/menuItems";
-import { ModeToggle } from "../ModeToggle";
+import { ModeToggle } from "../ModeToggle/ModeToggle";
 import { UserButton } from "@clerk/nextjs";
 
 const salsa = Salsa({
