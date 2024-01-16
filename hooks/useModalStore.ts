@@ -1,17 +1,24 @@
+import { AppointmentCustormerProps } from '@/types/AppointmentCustormerProps';
 import { create } from 'zustand';
 
-type ModalType = 'newAppointment';
+type ModalType = 'newAppointment' | 'editAppointment';
+
+type modalData = {
+    appointmentData?: AppointmentCustormerProps;
+}
 
 interface ModalStore {
     type: ModalType | null;
+    data: modalData;
     isOpen: boolean;
-    onOpen: (type: ModalType) => void;
+    onOpen: (type: ModalType, data?: modalData) => void;
     onClose: () => void;
 }
 
 export const useModal = create<ModalStore>((set) => ({
     type: null,
+    data: {},
     isOpen: false,
-    onOpen: (type) => set({ isOpen: true, type }),
+    onOpen: (type, data = {}) => set({ isOpen: true, type, data }),
     onClose: () => set({ type: null, isOpen: false })
 }));

@@ -1,3 +1,5 @@
+"use client";
+
 import {
     Card,
     CardContent,
@@ -9,12 +11,15 @@ import {
 import { Button } from "../ui/button";
 import { Pen, Trash2 } from "lucide-react";
 import { AppointmentCustormerProps } from "@/types/AppointmentCustormerProps";
+import { useModal } from "@/hooks/useModalStore";
 
 interface AppointmentCardProps {
     data: AppointmentCustormerProps;
 }
 
 const AppointmentCard = ({ data }: AppointmentCardProps) => {
+    const { onOpen } = useModal();
+
     return (
         <Card>
             <CardHeader>
@@ -26,7 +31,10 @@ const AppointmentCard = ({ data }: AppointmentCardProps) => {
             </CardContent>
             <CardFooter>
                 <div className="flex gap-4 justify-end w-full">
-                    <Button className="gap-2">
+                    <Button 
+                        className="gap-2"
+                        onClick={() => onOpen('editAppointment', { appointmentData: data })}
+                    >
                         <Pen /> Editar
                     </Button>
 
