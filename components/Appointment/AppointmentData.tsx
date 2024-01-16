@@ -1,16 +1,12 @@
-import { redirectToSignIn } from "@clerk/nextjs";
-
-import { currentProfile } from "@/lib/currentProfile";
 import { db } from "@/lib/db";
 import AppointmentDay from "./AppointmentDay";
+import { Profile } from "@prisma/client";
 
-const AppointmentData = async () => {
-    const profile = await currentProfile();
+type AppointmentDataProps = {
+    profile: Profile;
+}
 
-    if (!profile) {
-        return redirectToSignIn();
-    }
-    
+const AppointmentData = async ({ profile }: AppointmentDataProps) => {
     const appointments = await db.appointment.findMany({ 
         where: {
             profileId: profile.id
@@ -19,14 +15,11 @@ const AppointmentData = async () => {
         orderBy: { date: 'desc' },
     });
 
-
     return (
         <div>
-            {
-                appointments.length
-                ? <AppointmentDay data={appointments}/>
-                : 'Nenhum apontamento encontrado...'
-            }
+            {appointments.length
+            ? <AppointmentDay data={appointments}/>
+            : 'Nenhum apontamento encontrado...'}
         </div>
     );
 }
