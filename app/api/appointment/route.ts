@@ -66,3 +66,35 @@ export async function POST(req: Request) {
 
     return NextResponse.json(response, { status: response.code});
 }
+
+export async function PUT(req: Request) {
+    let response: ResponseModel<Appointment | any>;
+
+    try {
+        const profile = await currentProfile();
+        const { customer, date, start, end, description } = await req.json();
+
+        if (!profile) {
+            response = new ResponseModel(true, CodeResponseEnum.UNAUTHORIZED, '', {});
+            return NextResponse.json(response, { status: response.code});
+        }
+
+        const newAppointment = await db.appointment.create({
+            data: {
+                customerId: customer,
+                date,
+                description,
+                end,
+                start,
+                profileId: profile.id
+            }
+        });
+
+        response = new ResponseModel(false, CodeResponseEnum.CREATED, 'Apontamento criado', newAppointment);
+    } catch (error) {
+        console.log('[ERROR] POST Appointment - ', error);
+        response = new ResponseModel(true, CodeResponseEnum.INTERNAL_ERROR, 'Falha ao criar apontamento', error);
+    }
+
+    return NextResponse.json(response, { status: response.code});
+}

@@ -70,8 +70,13 @@ const EditAppointmentModal = () => {
         },
     });
 
+    const isModalOpen = isOpen && type === 'editAppointment';
+    const isLoading = form.formState.isSubmitting;
+
     useEffect(() => {
         if (appointmentData) {
+            loadCustomers(true);
+
             form.setValue('customer', appointmentData.customerId);
             form.setValue('date', appointmentData.date);
             form.setValue('description', appointmentData.description);
@@ -80,12 +85,9 @@ const EditAppointmentModal = () => {
         }
     }, [appointmentData, form]);
 
-    const isModalOpen = isOpen && type === 'editAppointment';
-    const isLoading = form.formState.isSubmitting;
-
     async function onSubmit(values: NewAppointmentType) {
         try {
-            const { data } = await axios.post<ResponseModel<Appointment>>('/api/appointment', values);
+            const { data } = await axios.put<ResponseModel<Appointment>>(`/api/appointment${appointmentData?.id}`, values);
             
             if (data.error) {
                 throw data.data;
