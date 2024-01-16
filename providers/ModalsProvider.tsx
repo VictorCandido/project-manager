@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import NewAppointmentModal from "../Appointment/NewAppointmentModal";
+import NewAppointmentModal from "../components/Appointment/NewAppointmentModal";
 
 const ModalsProvider = () => {
     const [ isMounted, setIsMounted ] = useState(false);
