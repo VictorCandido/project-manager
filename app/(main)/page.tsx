@@ -1,5 +1,10 @@
+import { initialProfile } from "@/lib/initialProfile";
 import { redirect } from "next/navigation";
 
-export default function Page() {
-  return redirect('/home');
+const SetupPage = async () => {
+  await initialProfile();
+
+  return redirect(`/home`);
 }
+ 
+export default SetupPage;

@@ -3,13 +3,24 @@ import ResponseModel, { CodeResponseEnum } from "@/models/ResponseModel";
 import { Appointment } from "@prisma/client";
 import { NextResponse } from "next/server";
 import _ from 'lodash';
+import { currentProfile } from "@/lib/currentProfile";
 
 
 export async function GET(req: Request) {
     let response: ResponseModel<Appointment | any>;
     
     try {
+        const profile = await currentProfile();
+
+        if (!profile) {
+            response = new ResponseModel(true, CodeResponseEnum.UNAUTHORIZED, '', {});
+            return NextResponse.json(response, { status: response.code});
+        }
+        
         const appointments = await db.appointment.findMany({ 
+            where: {
+                profileId: profile.id
+            },
             include: { customer: true },
             orderBy: { date: 'desc' },
         });
@@ -28,7 +39,13 @@ export async function POST(req: Request) {
     let response: ResponseModel<Appointment | any>;
 
     try {
+        const profile = await currentProfile();
         const { customer, date, start, end, description } = await req.json();
+
+        if (!profile) {
+            response = new ResponseModel(true, CodeResponseEnum.UNAUTHORIZED, '', {});
+            return NextResponse.json(response, { status: response.code});
+        }
 
         const newAppointment = await db.appointment.create({
             data: {
@@ -37,6 +54,7 @@ export async function POST(req: Request) {
                 description,
                 end,
                 start,
+                profileId: profile.id
             }
         });
 

@@ -21,7 +21,7 @@ const AppointmentCard = ({ data }: AppointmentCardProps) => {
                 <CardTitle>{data.customer.name}</CardTitle>
                 <CardDescription>{data.start} - {data.end}</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="whitespace-pre-wrap">
                 {data.description}
             </CardContent>
             <CardFooter>
