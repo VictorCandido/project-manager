@@ -93,13 +93,13 @@ const EditAppointmentModal = () => {
                 throw data.data;
             }
     
-            toast.success('Apontamento criado com sucesso.');
+            toast.success('Apontamento atualizado com sucesso.');
             form.reset();
             router.refresh();
             onClose();
         } catch (error) {
-            console.log('Falha ao registrar apontamento - ', error);
-            toast.error('Falha ao registrar apontamento. Por favor tente novamente.');
+            console.log('Falha ao atualizar apontamento - ', error);
+            toast.error('Falha ao atualizar apontamento. Por favor tente novamente.');
         }
     }
 

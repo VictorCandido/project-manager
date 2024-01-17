@@ -1,7 +1,7 @@
 import { AppointmentCustormerProps } from '@/types/AppointmentCustormerProps';
 import { create } from 'zustand';
 
-type ModalType = 'newAppointment' | 'editAppointment';
+type ModalType = 'newAppointment' | 'editAppointment' | 'deleteAppointment';
 
 type modalData = {
     appointmentData?: AppointmentCustormerProps;

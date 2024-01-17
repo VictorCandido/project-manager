@@ -38,7 +38,11 @@ const AppointmentCard = ({ data }: AppointmentCardProps) => {
                         <Pen /> Editar
                     </Button>
 
-                    <Button className="gap-2" variant="destructive">
+                    <Button 
+                        className="gap-2" 
+                        variant="destructive"
+                        onClick={() => onOpen('deleteAppointment', { appointmentData: data })}
+                    >
                         <Trash2 /> Remover
                     </Button>
                 </div>
