@@ -1,0 +1,10 @@
+services:
+  postgre:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: 'root'
+      POSTGRES_DB: 'project-manager'
+    volumes:
+      - ./postgres-local:/docker-entrypoint-initdb.d
