@@ -8,7 +8,6 @@ import esLocale from '@fullcalendar/core/locales/pt-br';
 import { createRef, useContext, useEffect, useState } from 'react';
 import { DateSelectArg } from '@fullcalendar/core/index.js';
 import useWindowDimensions from '@/hooks/useWindowDimensions';
-import { Button } from '@/components/ui/button';
 import { NavigateContext } from '@/contexts/NavigateContext';
 
 const CalendarPage = () => {

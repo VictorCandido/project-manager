@@ -1,4 +1,4 @@
-import MenuItemInterface from "@/interfaces/MenuItemInterface";
+import { MenuItemInterface } from "@/types/MenuItemInterface";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 interface SidebarItemProps {

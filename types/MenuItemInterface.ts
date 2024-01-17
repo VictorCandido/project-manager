@@ -1,6 +1,6 @@
 import { LucideIcon } from "lucide-react";
 
-export default interface MenuItemInterface {
+export type MenuItemInterface = {
     key: string;
     name: string;
     link: string;

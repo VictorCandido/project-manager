@@ -4,8 +4,8 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Roboto } from 'next/font/google'
 import { cn } from '@/lib/utils';
-import { Providers } from '@/providers/providers';
 import { Toaster } from '@/components/ui/sonner';
+import { Providers } from '@/providers/Providers';
 
 const roboto = Roboto({
   weight: ['400', '700', '900'],
