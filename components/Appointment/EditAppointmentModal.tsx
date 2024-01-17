@@ -87,7 +87,7 @@ const EditAppointmentModal = () => {
 
     async function onSubmit(values: NewAppointmentType) {
         try {
-            const { data } = await axios.put<ResponseModel<Appointment>>(`/api/appointment${appointmentData?.id}`, values);
+            const { data } = await axios.put<ResponseModel<Appointment>>(`/api/appointment/${appointmentData?.id}`, values);
             
             if (data.error) {
                 throw data.data;
@@ -104,7 +104,7 @@ const EditAppointmentModal = () => {
     }
 
     function handleClose() {
-        form.reset();
+        // form.reset();
         onClose();
     }
 
@@ -246,7 +246,7 @@ const EditAppointmentModal = () => {
                                                     )}    
                                                 >
                                                     {field.value 
-                                                        ? customers.find((customer) => customer.id === field.value)?.name
+                                                        ? customers?.find((customer) => customer.id === field.value)?.name
                                                         : 'Selecione um cliente'}
 
 
@@ -265,7 +265,7 @@ const EditAppointmentModal = () => {
                                                 <CommandEmpty>{customersLoading ? 'Carregando...' : 'Nenhum cliente encontrado.'}</CommandEmpty>
 
                                                 <CommandGroup>
-                                                    {customers.map((customer) => (
+                                                    {customers?.map((customer) => (
                                                         <CommandItem
                                                             value={customer.id}
                                                             key={customer.id}

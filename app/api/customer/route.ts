@@ -5,20 +5,9 @@ import { Customer } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
-    const {userId, getToken} = auth();
     let response: ResponseModel<Customer[] | any>;
     
     try {
-        console.log('### userId', userId);
-    
-        if (!userId) {
-            response = new ResponseModel(true, CodeResponseEnum.UNAUTHORIZED, '', {});  
-            return NextResponse.json(response, { status: response.code });
-        }
-
-        // const token = await getToken({template: "supabase"});
-        // console.log('### token', token);
-
         const customers = await db.customer.findMany();
         response = new ResponseModel(false, CodeResponseEnum.OK, 'OK', customers);
     } catch (error: any) {

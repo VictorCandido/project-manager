@@ -1,15 +1,18 @@
-import { db } from "@/lib/db";
-import ResponseModel, { CodeResponseEnum } from "@/models/ResponseModel";
 import { Appointment } from "@prisma/client";
 import { NextResponse } from "next/server";
-import _ from 'lodash';
-import { currentProfile } from "@/lib/currentProfile";
 
-export async function POST(req: Request) {
+import { currentProfile } from "@/lib/currentProfile";
+import { db } from "@/lib/db";
+import ResponseModel, { CodeResponseEnum } from "@/models/ResponseModel";
+
+export async function PUT(req: Request, { params }: { params: { appointmentId: string }}) {
     let response: ResponseModel<Appointment | any>;
 
     try {
         const profile = await currentProfile();
+
+        console.log('#### UPDATE APPOINTMENT profile', profile);
+
         const { customer, date, start, end, description } = await req.json();
 
         if (!profile) {
@@ -17,7 +20,16 @@ export async function POST(req: Request) {
             return NextResponse.json(response, { status: response.code});
         }
 
-        const newAppointment = await db.appointment.create({
+        if (!params.appointmentId) {
+            response = new ResponseModel(true, CodeResponseEnum.BAD_REQUEST, 'Necessário informar ID do apontamento', {});
+            return NextResponse.json(response, { status: response.code});
+        }
+
+        const newAppointment = await db.appointment.update({
+            where: {
+                id: params.appointmentId,
+                profileId: profile.id
+            },
             data: {
                 customerId: customer,
                 date,
