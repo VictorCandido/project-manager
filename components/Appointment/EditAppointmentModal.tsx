@@ -55,6 +55,8 @@ type NewAppointmentType = z.infer<typeof formSchema>;
 const EditAppointmentModal = () => {
     const [customers, setCustomers] = useState<Customer[]>([]);
     const [customersLoading, setCustomersLoading] = useState<boolean>(false);
+    const [openCustomerPopover, setOpenCustomerPopover] = useState<boolean>(false);
+    const [openDatePopover, setOpenDatePopover] = useState<boolean>(false);
 
     const router = useRouter();
     const { isOpen, onClose, type, data: { appointmentData } } = useModal();
@@ -214,6 +216,11 @@ const EditAppointmentModal = () => {
         return timeFormatted;
     }
 
+    function handleOpenCustomerPopover(open: boolean) {
+        loadCustomers(open);
+        setOpenCustomerPopover(open);
+    }
+
     return (
         <Dialog open={isModalOpen} onOpenChange={ handleClose }>
             <DialogContent className="sm:max-w-7xl">
@@ -234,7 +241,7 @@ const EditAppointmentModal = () => {
                                 <FormItem className="flex flex-col">
                                     <FormLabel>Cliente</FormLabel>
 
-                                    <Popover onOpenChange={loadCustomers}>
+                                    <Popover onOpenChange={handleOpenCustomerPopover} open={openCustomerPopover}>
                                         <PopoverTrigger asChild>
                                             <FormControl>
                                                 <Button
@@ -244,6 +251,7 @@ const EditAppointmentModal = () => {
                                                         "w-full justify-between",
                                                         !field.value && "text-muted-foreground"
                                                     )}    
+                                                    onClick={() => setOpenCustomerPopover(openCustomerPopover => !openCustomerPopover)}
                                                 >
                                                     {field.value 
                                                         ? customers?.find((customer) => customer.id === field.value)?.name
@@ -267,11 +275,12 @@ const EditAppointmentModal = () => {
                                                 <CommandGroup>
                                                     {customers?.map((customer) => (
                                                         <CommandItem
-                                                            value={customer.id}
+                                                            value={customer.name}
                                                             key={customer.id}
                                                             onSelect={() => {
                                                                 form.setValue('customer', customer.id);
                                                                 form.trigger('customer');
+                                                                setOpenCustomerPopover(openCustomerPopover => !openCustomerPopover);
                                                             }}
                                                         >
                                                             {customer.name}
@@ -305,7 +314,7 @@ const EditAppointmentModal = () => {
                                         <FormLabel>Data</FormLabel>
                                         
                                         <FormControl>
-                                            <Popover>
+                                            <Popover onOpenChange={setOpenDatePopover} open={openDatePopover}>
                                                 <PopoverTrigger asChild>
                                                     <Button
                                                         variant={"outline"}
@@ -324,7 +333,10 @@ const EditAppointmentModal = () => {
                                                     <Calendar
                                                         mode="single"
                                                         selected={form.getValues('date')}
-                                                        onSelect={(value) => form.setValue('date', value || getDateWhithoutHours())}
+                                                        onSelect={(value) => {
+                                                            form.setValue('date', value || getDateWhithoutHours());
+                                                            setOpenDatePopover(openDatePopover => !openDatePopover);
+                                                        }}
                                                         locale={ptBR}
                                                         initialFocus
                                                     />

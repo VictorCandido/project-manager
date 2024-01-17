@@ -25,13 +25,14 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="pt-BR">
         <body 
-          className={cn(roboto.className, 'bg-white bg-background')}
+          className={roboto.className}
           suppressHydrationWarning
         >
-            <Providers>
-              {children}
-            </Providers>
-          <Toaster richColors expand position="top-right" />
+          <Providers>
+            {children}
+          </Providers>
+
+          <Toaster richColors expand position="bottom-right" />
         </body>
       </html>
     </ClerkProvider>

@@ -2,9 +2,15 @@ import { initialProfile } from "@/lib/initialProfile";
 import { redirect } from "next/navigation";
 
 const SetupPage = async () => {
-  await initialProfile();
+  const profile = await initialProfile();
 
-  return redirect(`/home`);
+  if (profile) {
+    return redirect(`/home`);
+  }
+
+  return (
+    <div>Falha ao logar no sistema</div>
+  )
 }
  
 export default SetupPage;

@@ -55,6 +55,8 @@ type NewAppointmentType = z.infer<typeof formSchema>;
 const NewAppointmentModal = () => {
     const [customers, setCustomers] = useState<Customer[]>([]);
     const [customersLoading, setCustomersLoading] = useState<boolean>(false);
+    const [openCustomerPopover, setOpenCustomerPopover] = useState<boolean>(false);
+    const [openDatePopover, setOpenDatePopover] = useState<boolean>(false);
 
     const router = useRouter();
     const { isOpen, onClose, type } = useModal();
@@ -202,6 +204,11 @@ const NewAppointmentModal = () => {
         return timeFormatted;
     }
 
+    function handleOpenCustomerPopover(open: boolean) {
+        loadCustomers(open);
+        setOpenCustomerPopover(open);
+    }
+
     return (
         <Dialog open={isModalOpen} onOpenChange={ handleClose }>
             <DialogContent className="sm:max-w-7xl">
@@ -222,7 +229,7 @@ const NewAppointmentModal = () => {
                                 <FormItem className="flex flex-col">
                                     <FormLabel>Cliente</FormLabel>
 
-                                    <Popover onOpenChange={loadCustomers}>
+                                    <Popover open={openCustomerPopover} onOpenChange={handleOpenCustomerPopover}>
                                         <PopoverTrigger asChild>
                                             <FormControl>
                                                 <Button
@@ -255,11 +262,12 @@ const NewAppointmentModal = () => {
                                                 <CommandGroup>
                                                     {customers.map((customer) => (
                                                         <CommandItem
-                                                            value={customer.id}
+                                                            value={customer.name}
                                                             key={customer.id}
                                                             onSelect={() => {
                                                                 form.setValue('customer', customer.id);
                                                                 form.trigger('customer');
+                                                                setOpenCustomerPopover(openCustomerPopover => !openCustomerPopover);
                                                             }}
                                                         >
                                                             {customer.name}
@@ -293,7 +301,7 @@ const NewAppointmentModal = () => {
                                         <FormLabel>Data</FormLabel>
                                         
                                         <FormControl>
-                                            <Popover>
+                                            <Popover onOpenChange={setOpenDatePopover} open={openDatePopover}>
                                                 <PopoverTrigger asChild>
                                                     <Button
                                                         variant={"outline"}
@@ -312,7 +320,10 @@ const NewAppointmentModal = () => {
                                                     <Calendar
                                                         mode="single"
                                                         selected={form.getValues('date')}
-                                                        onSelect={(value) => form.setValue('date', value || getDateWhithoutHours())}
+                                                        onSelect={(value) => {
+                                                            form.setValue('date', value || getDateWhithoutHours());
+                                                            setOpenDatePopover(openDatePopover => !openDatePopover);
+                                                        }}
                                                         locale={ptBR}
                                                         initialFocus
                                                     />

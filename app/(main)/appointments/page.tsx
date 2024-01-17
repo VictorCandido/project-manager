@@ -10,7 +10,7 @@ export default async function PainelControle() {
   const profile = await currentProfile();
 
   if (!profile) {
-      return redirect('/');
+    return redirect('/');
   }
 
   return (
