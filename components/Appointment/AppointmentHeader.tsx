@@ -17,7 +17,7 @@ const AppointmentHeader = () => {
     const [openPopover, setOpenPopover] = useState<boolean>(false);
     const { onOpen } = useModal();
     const { filterDate } = useFilterAppointment.getState();
-  
+
     return (
         <div className="flex justify-end gap-4">
             <Popover open={openPopover} onOpenChange={setOpenPopover}>
@@ -46,12 +46,12 @@ const AppointmentHeader = () => {
                     />
                 </PopoverContent>
             </Popover>
-            
+
             <Button onClick={() => onOpen('newAppointment')}>
-                <Plus /> Novo Apontamento
+                <Plus className="h-5 w-5 mr-1" /> Novo Apontamento
             </Button>
         </div>
     );
 }
- 
+
 export default AppointmentHeader;

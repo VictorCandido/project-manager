@@ -1,10 +1,12 @@
 import { AppointmentCustomerProps } from '@/types/AppointmentCustomerProps';
+import { Customer } from '@prisma/client';
 import { create } from 'zustand';
 
-type ModalType = 'newAppointment' | 'editAppointment' | 'deleteAppointment';
+type ModalType = 'newAppointment' | 'editAppointment' | 'deleteAppointment' | 'newCustomer' | 'editCustomer' | 'deleteCustomer';
 
 type modalData = {
     appointmentData?: AppointmentCustomerProps;
+    custormerData?: Customer;
 }
 
 interface ModalStore {

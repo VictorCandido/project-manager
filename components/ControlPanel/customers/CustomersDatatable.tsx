@@ -26,6 +26,9 @@ import { useEffect, useState } from "react"
 import { Input } from "@/components/ui/input"
 import { DataTableViewOptions } from "@/components/Datatable/DataTableViewOptions"
 import { DataTablePagination } from "@/components/Datatable/DataTablePagination"
+import { Button } from "@/components/ui/button"
+import { Plus } from "lucide-react"
+import { useModal } from "@/hooks/useModalStore"
 
 interface CustomersDatatableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -36,6 +39,8 @@ export function CustomersDatatable<TData, TValue>({ columns, data }: CustomersDa
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+
+  const { onOpen } = useModal();
 
   const table = useReactTable({
     data,
@@ -72,6 +77,13 @@ export function CustomersDatatable<TData, TValue>({ columns, data }: CustomersDa
         />
 
         <DataTableViewOptions table={table} />
+
+        <Button
+          className="ml-4"
+          onClick={() => onOpen('newCustomer')}
+        >
+          <Plus className="w-5 h-5 mr-1" /> Novo Cliente
+        </Button>
       </div>
 
       <div className="rounded-md border">
