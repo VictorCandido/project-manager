@@ -12,7 +12,7 @@ import { UserButton } from "@clerk/nextjs";
 const salsa = Salsa({
     weight: '400',
     subsets: ['latin'],
-  });
+});
 
 const Sidebar = ({ children }: { children: React.ReactNode }) => {
     const { isOpenSidebar, setIsOpenSidebar } = useContext(NavigateContext);
@@ -23,33 +23,33 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
                 {/* LOGO */}
                 <div className="p-5 flex justify-center items-center">
                     <button
-                        className="bg-secondary text-3xl rounded-full absolute -right-3 top-9 border border-zinc-300 dark:border-zinc-700 cursor-pointer" 
-                        onClick={() => setIsOpenSidebar(!isOpenSidebar)} 
+                        className="bg-secondary text-3xl rounded-full absolute -right-3 top-9 border border-zinc-300 dark:border-zinc-700 cursor-pointer"
+                        onClick={() => setIsOpenSidebar(!isOpenSidebar)}
                     >
                         {isOpenSidebar ? <ChevronLeft /> : <ChevronRight />}
                     </button>
 
-                    <Boxes size={30}/> <span className={`${salsa.className} ${isOpenSidebar ? 'w-36 ml-4' : 'w-0 h-0'} overflow-hidden transition-all`}>PROJECT MANAGER</span>
+                    <Boxes size={30} /> <span className={`${salsa.className} ${isOpenSidebar ? 'w-36 ml-4' : 'w-0 h-0'} overflow-hidden transition-all`}>PROJECT MANAGER</span>
                 </div>
 
                 {/* MENU */}
                 <div className="flex-1 px-3">
-                    { menuItems?.map((menu, index) => (
-                        <SidebarItem 
-                            key={index} 
+                    {menuItems?.map((menu, index) => (
+                        <SidebarItem
+                            key={index}
                             menu={menu}
                             index={index}
                             open={isOpenSidebar}
-                        />     
-                    )) }
+                        />
+                    ))}
                 </div>
 
                 {/* FOOTER */}
                 <div className="flex border-t p-4">
-                    <UserButton 
-                        afterSignOutUrl="/" 
+                    <UserButton
+                        afterSignOutUrl="/"
                         appearance={{
-                            elements: { 
+                            elements: {
                                 avatarBox: 'h-10 w-10 rounded-md',
                                 userButtonTrigger: 'rounded-md'
                             }
@@ -74,10 +74,10 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
             </div>
 
             <div className="w-full">
-                { children }            
+                {children}
             </div>
         </div>
     );
 }
- 
+
 export default Sidebar;

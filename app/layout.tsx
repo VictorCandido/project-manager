@@ -12,7 +12,7 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: "GESTOR"
+  title: "Project Manager"
 }
 
 export default function RootLayout({
@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="pt-BR">
-        <body 
+        <body
           className={roboto.className}
           suppressHydrationWarning
         >
