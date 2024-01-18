@@ -5,23 +5,6 @@ import { Metadata } from "next"
 export const metadata: Metadata = {
   title: "Painel de Controle | Project Manager"
 }
-
-const sidebarNavItems = [
-  {
-    title: "Usuários",
-    href: "/controlpanel/users",
-  },
-  {
-    title: "Empresas",
-    href: "/controlpanel/companies",
-  },
-  {
-    title: "Clientes",
-    href: "/controlpanel/customers",
-  },
-
-]
-
 interface SettingsLayoutProps {
   children: React.ReactNode
 }
@@ -29,7 +12,7 @@ interface SettingsLayoutProps {
 export default function SettingsLayout({ children }: SettingsLayoutProps) {
   return (
     <>
-      <div className="space-y-6 pb-16">
+      <div className="space-y-6">
         <div className="space-y-0.5">
           <h2 className="text-2xl font-bold tracking-tight">Painel de Controle</h2>
 
@@ -42,10 +25,12 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
 
         <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
           <aside className="-mx-4 lg:w-1/5">
-            <SidebarNav items={sidebarNavItems} />
+            <SidebarNav />
           </aside>
 
-          <div className="flex-1">{children}</div>
+          <div className="flex-1">
+            {children}
+          </div>
         </div>
       </div>
     </>

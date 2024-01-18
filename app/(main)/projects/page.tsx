@@ -4,7 +4,7 @@ import { DataTable } from "@/components/Datatable/Datatable";
 
 import { ColumnDef } from "@tanstack/react-table"
 
-import { Badge } from "@/components/ui/badge"; 
+import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox"
 
 import { Task } from "@/components/Datatable/data/schema"
@@ -151,6 +151,16 @@ const tasks = [
     "priority": "medium"
   },
 ]
+
+// for (let i = 0; i < 20; i++) {
+//   tasks.push({
+//     "id": `TASK-${Math.floor(Math.random() * 10000)}`,
+//     "title": `Task title ${i + 1}`,
+//     "status": ["in progress", "backlog", "todo"][Math.floor(Math.random() * 3)],
+//     "label": ["documentation", "bug", "feature"][Math.floor(Math.random() * 3)],
+//     "priority": ["low", "medium", "high"][Math.floor(Math.random() * 3)]
+//   });
+// }
 
 
 export default function Projetos() {

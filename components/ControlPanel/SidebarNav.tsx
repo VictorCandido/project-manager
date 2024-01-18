@@ -5,15 +5,13 @@ import { usePathname } from "next/navigation"
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "../ui/button"
+import { MenuItemInterface } from "@/types/MenuItemInterface"
+import { controlPanelMenuItems } from "@/utils/menuItems"
 
 interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
-  items: {
-    href: string
-    title: string
-  }[]
 }
 
-export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
+export function SidebarNav({ className, ...props }: SidebarNavProps) {
   const pathname = usePathname()
 
   return (
@@ -24,19 +22,19 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
       )}
       {...props}
     >
-      {items.map((item) => (
+      {controlPanelMenuItems.map((item) => (
         <Link
-          key={item.href}
-          href={item.href}
+          key={item.link}
+          href={item.link}
           className={cn(
             buttonVariants({ variant: "ghost" }),
-            pathname === item.href
+            pathname === item.link
               ? "bg-muted hover:bg-muted"
               : "hover:bg-transparent hover:underline",
             "justify-start"
           )}
         >
-          {item.title}
+          {item.name}
         </Link>
       ))}
     </nav>

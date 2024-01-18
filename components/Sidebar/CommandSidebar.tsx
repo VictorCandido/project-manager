@@ -1,8 +1,8 @@
 import { Laptop, Moon, PlusCircle, Sun } from "lucide-react";
-import { useRouter, useSelectedLayoutSegment } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 
-import { menuItems } from "@/utils/menuItems";
+import { controlPanelMenuItems, menuItems } from "@/utils/menuItems";
 import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut } from "../ui/command";
 import { useModal } from "@/hooks/useModalStore";
 import { useCallback, useEffect } from "react";
@@ -50,6 +50,21 @@ const CommandSidebar = ({ open, setOpen }: CommandSidebarProps) => {
                 <CommandEmpty>Nenhum resultado encontrado.</CommandEmpty>
                 <CommandGroup heading="Páginas">
                     {menuItems?.map((menu) => (
+                        // não exibir se for painel de controle
+                        menu.key !== 'controlpanel' && (
+                            <CommandItem key={menu.key} onSelect={() => runCommand(() => router.push(menu.link))}>
+                                <menu.icon className="mr-2 h-4 w-4" />
+                                <span>{menu.name}</span>
+                            </CommandItem>
+                        )
+                    ))}
+                </CommandGroup>
+
+                <CommandSeparator />
+
+                {/* Lista as opções do menu do painel de controle */}
+                <CommandGroup heading="Painel de controle">
+                    {controlPanelMenuItems?.map((menu) => (
                         <CommandItem key={menu.key} onSelect={() => runCommand(() => router.push(menu.link))}>
                             <menu.icon className="mr-2 h-4 w-4" />
                             <span>{menu.name}</span>
@@ -57,7 +72,6 @@ const CommandSidebar = ({ open, setOpen }: CommandSidebarProps) => {
                     ))}
                 </CommandGroup>
 
-                <CommandSeparator />
 
                 <CommandGroup heading="Apontamentos">
                     <CommandItem onSelect={() => runCommand(() => redirectToApponintmentsAndOpenNewAppointmentModal())}>
