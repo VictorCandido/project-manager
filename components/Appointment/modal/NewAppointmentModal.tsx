@@ -392,7 +392,7 @@ const NewAppointmentModal = () => {
                                     <FormLabel>Descrição</FormLabel>
                                     
                                     <FormControl>
-                                        <Textarea placeholder="Informe a descrição..." {...field} />
+                                        <Textarea placeholder="Informe a descrição..." rows={8} {...field} />
                                     </FormControl>
                                     
                                     <FormMessage />
