@@ -5,12 +5,58 @@ import AppointmentData from "@/components/Appointment/AppointmentData";
 import AppointmentHeader from "@/components/Appointment/AppointmentHeader";
 import { currentProfile } from "@/lib/currentProfile";
 import { redirect } from "next/navigation";
+import { db } from "@/lib/db";
+import { AppointmentCustomerProps } from "@/types/AppointmentCustomerProps";
+import { GroupedAppointmentCustomerProps } from "@/types/GroupedAppointmentCustomerProps";
+import { Profile } from "@prisma/client";
+import { useFilterAppointment } from "@/hooks/useFilterAppointmentStore";
 
 export default async function PainelControle() {
   const profile = await currentProfile();
 
   if (!profile) {
     return redirect('/');
+  }
+  
+  const appointments = await getAppointments(profile);
+  const groupedAppointments = groupAppoitments(appointments);
+
+  async function getAppointments(profile: Profile) {
+      const appointments = await db.appointment.findMany({ 
+          where: {
+              profileId: profile.id
+          },
+          include: { customer: true },
+          orderBy: { date: 'desc' },
+      });
+
+      return appointments;
+  }
+
+  function groupAppoitments(appointments: AppointmentCustomerProps[]) {
+      const groupedAppointments = new Array<GroupedAppointmentCustomerProps>();
+
+      for (let i = 0; i < appointments.length; i++) {
+          let achou = false;
+          
+          for (let j = 0; j < groupedAppointments.length; j++) {
+              if (String(groupedAppointments[j].date) === String(appointments[i].date)) {
+                  groupedAppointments[j].appointments.push(appointments[i]);
+                  
+                  achou = true;
+                  break;
+              }
+          }
+  
+          if (!achou) {
+              groupedAppointments.push({
+                  date: appointments[i].date,
+                  appointments: new Array(appointments[i])
+              });
+          }
+      }
+
+      return groupedAppointments;
   }
 
   return (
@@ -29,11 +75,9 @@ export default async function PainelControle() {
     </div>
 
     {/* CONTENT */}
-    <div className="flex flex-col gap-4">
-      <Suspense fallback={<AppointmentSkeleton />}>
-        <AppointmentData profile={profile}/>
-      </Suspense>
-    </div>
+    <Suspense fallback={<AppointmentSkeleton />}>
+      <AppointmentData groupedAppointments={groupedAppointments}/>
+    </Suspense>
    </div>
   )
 }

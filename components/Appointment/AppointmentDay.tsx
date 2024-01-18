@@ -1,17 +1,25 @@
-import { AppointmentCustormerProps } from "@/types/AppointmentCustormerProps";
+import _, { filter } from 'lodash';
+
+import { GroupedAppointmentCustomerProps } from "@/types/GroupedAppointmentCustomerProps";
 import AppointmentCard from "./AppointmentCard";
 
 interface AppointmentDayProps {
-    data: AppointmentCustormerProps[]
+    groupedAppointments: GroupedAppointmentCustomerProps[];
+    filterDate?: Date;
 }
 
-const AppointmentDay = ({ data }: AppointmentDayProps) => {
+const AppointmentDay = async ({ groupedAppointments, filterDate }: AppointmentDayProps) => {
+    if (filterDate) {
+        groupedAppointments = groupedAppointments.filter((groupedAppointment) => String(groupedAppointment.date) === String(filterDate));
+    }
+
     return (
         <>
-            {data.map((appointment, index) => (
-                <div key={index}>
-                    <h2 className="text-xl font-bold mb-4">
-                        {new Date(appointment.date)
+            {groupedAppointments.length
+            ? groupedAppointments.map((groupedAppointments, index) => (
+                <div key={index} className="mt-4">
+                    <h2 className="text-2xl font-bold">
+                        {new Date(groupedAppointments.date)
                             .toLocaleDateString('pt-BR', { 
                                 year: 'numeric', 
                                 month: 'long', 
@@ -19,11 +27,15 @@ const AppointmentDay = ({ data }: AppointmentDayProps) => {
                             })}
                     </h2>
 
-                    <AppointmentCard 
-                        data={appointment}
-                    />
+                    {groupedAppointments.appointments.map((appointment) => (
+                        <AppointmentCard 
+                            key={appointment.id}
+                            data={appointment}
+                        />
+                    ))}
                 </div>
-            ))}
+            ))
+            : 'Nenhum apontamento encontrado...'}
         </>
     );
 }

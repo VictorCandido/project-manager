@@ -2,7 +2,6 @@ import { db } from "@/lib/db";
 import ResponseModel, { CodeResponseEnum } from "@/models/ResponseModel";
 import { Appointment } from "@prisma/client";
 import { NextResponse } from "next/server";
-import _ from 'lodash';
 import { currentProfile } from "@/lib/currentProfile";
 
 export async function POST(req: Request) {

@@ -6,17 +6,17 @@ import axios from 'axios';
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale/pt-BR";
 import { useModal } from "@/hooks/useModalStore";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Appointment, Customer } from "@prisma/client";
 import { toast } from "sonner"
 import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Textarea } from "../ui/textarea";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Textarea } from "../../ui/textarea";
+import { Popover, PopoverContent, PopoverTrigger } from "../../ui/popover";
 import { cn } from "@/lib/utils";
-import { Calendar } from "../ui/calendar";
+import { Calendar } from "../../ui/calendar";
 import { 
     Dialog, 
     DialogContent, 
@@ -39,7 +39,7 @@ import {
     CommandGroup, 
     CommandInput, 
     CommandItem 
-} from "../ui/command";
+} from "../../ui/command";
 import ResponseModel from "@/models/ResponseModel";
 
 const formSchema = z.object({
@@ -52,14 +52,14 @@ const formSchema = z.object({
 
 type NewAppointmentType = z.infer<typeof formSchema>;
 
-const NewAppointmentModal = () => {
+const EditAppointmentModal = () => {
     const [customers, setCustomers] = useState<Customer[]>([]);
     const [customersLoading, setCustomersLoading] = useState<boolean>(false);
     const [openCustomerPopover, setOpenCustomerPopover] = useState<boolean>(false);
     const [openDatePopover, setOpenDatePopover] = useState<boolean>(false);
 
     const router = useRouter();
-    const { isOpen, onClose, type } = useModal();
+    const { isOpen, onClose, type, data: { appointmentData } } = useModal();
 
     const form = useForm<NewAppointmentType>({
         resolver: zodResolver(formSchema),
@@ -72,29 +72,41 @@ const NewAppointmentModal = () => {
         },
     });
 
-    const isModalOpen = isOpen && type === 'newAppointment';
+    const isModalOpen = isOpen && type === 'editAppointment';
     const isLoading = form.formState.isSubmitting;
+
+    useEffect(() => {
+        if (appointmentData) {
+            loadCustomers(true);
+
+            form.setValue('customer', appointmentData.customerId);
+            form.setValue('date', appointmentData.date);
+            form.setValue('description', appointmentData.description);
+            form.setValue('end', appointmentData.end);
+            form.setValue('start', appointmentData.start);
+        }
+    }, [appointmentData, form]);
 
     async function onSubmit(values: NewAppointmentType) {
         try {
-            const { data } = await axios.post<ResponseModel<Appointment>>('/api/appointment', values);
+            const { data } = await axios.put<ResponseModel<Appointment>>(`/api/appointment/${appointmentData?.id}`, values);
             
             if (data.error) {
                 throw data.data;
             }
     
-            toast.success('Apontamento criado com sucesso.');
+            toast.success('Apontamento atualizado com sucesso.');
             form.reset();
             router.refresh();
             onClose();
         } catch (error) {
-            console.log('Falha ao registrar apontamento - ', error);
-            toast.error('Falha ao registrar apontamento. Por favor tente novamente.');
+            console.log('Falha ao atualizar apontamento - ', error);
+            toast.error('Falha ao atualizar apontamento. Por favor tente novamente.');
         }
     }
 
     function handleClose() {
-        form.reset();
+        // form.reset();
         onClose();
     }
 
@@ -213,7 +225,7 @@ const NewAppointmentModal = () => {
         <Dialog open={isModalOpen} onOpenChange={ handleClose }>
             <DialogContent className="sm:max-w-7xl">
                 <DialogHeader>
-                    <DialogTitle>Novo Apontamento</DialogTitle>
+                    <DialogTitle>Editar Apontamento</DialogTitle>
                     <DialogDescription>
                         Insira a descrição de suas atividades.
                     </DialogDescription>
@@ -229,7 +241,7 @@ const NewAppointmentModal = () => {
                                 <FormItem className="flex flex-col">
                                     <FormLabel>Cliente</FormLabel>
 
-                                    <Popover open={openCustomerPopover} onOpenChange={handleOpenCustomerPopover}>
+                                    <Popover onOpenChange={handleOpenCustomerPopover} open={openCustomerPopover}>
                                         <PopoverTrigger asChild>
                                             <FormControl>
                                                 <Button
@@ -239,9 +251,10 @@ const NewAppointmentModal = () => {
                                                         "w-full justify-between",
                                                         !field.value && "text-muted-foreground"
                                                     )}    
+                                                    onClick={() => setOpenCustomerPopover(openCustomerPopover => !openCustomerPopover)}
                                                 >
                                                     {field.value 
-                                                        ? customers.find((customer) => customer.id === field.value)?.name
+                                                        ? customers?.find((customer) => customer.id === field.value)?.name
                                                         : 'Selecione um cliente'}
 
 
@@ -260,7 +273,7 @@ const NewAppointmentModal = () => {
                                                 <CommandEmpty>{customersLoading ? 'Carregando...' : 'Nenhum cliente encontrado.'}</CommandEmpty>
 
                                                 <CommandGroup>
-                                                    {customers.map((customer) => (
+                                                    {customers?.map((customer) => (
                                                         <CommandItem
                                                             value={customer.name}
                                                             key={customer.id}
@@ -413,4 +426,4 @@ const NewAppointmentModal = () => {
     );
 }
  
-export default NewAppointmentModal;
+export default EditAppointmentModal;

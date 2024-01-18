@@ -1,27 +1,20 @@
-import { db } from "@/lib/db";
+"use client";
+
+import { GroupedAppointmentCustomerProps } from "@/types/GroupedAppointmentCustomerProps";
 import AppointmentDay from "./AppointmentDay";
-import { Profile } from "@prisma/client";
+import { useFilterAppointment } from "@/hooks/useFilterAppointmentStore";
 
 type AppointmentDataProps = {
-    profile: Profile;
+    groupedAppointments: GroupedAppointmentCustomerProps[];
 }
 
-const AppointmentData = async ({ profile }: AppointmentDataProps) => {
-    const appointments = await db.appointment.findMany({ 
-        where: {
-            profileId: profile.id
-        },
-        include: { customer: true },
-        orderBy: { date: 'desc' },
-    });
+const AppointmentData = ({ groupedAppointments }: AppointmentDataProps) => {
+        const { filterDate } = useFilterAppointment();
 
-    return (
-        <div>
-            {appointments.length
-            ? <AppointmentDay data={appointments}/>
-            : 'Nenhum apontamento encontrado...'}
-        </div>
-    );
+    return <AppointmentDay 
+                groupedAppointments={groupedAppointments}
+                filterDate={filterDate}
+            />;
 }
  
 export default AppointmentData;

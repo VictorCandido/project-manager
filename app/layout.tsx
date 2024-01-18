@@ -3,7 +3,6 @@ import { ClerkProvider } from '@clerk/nextjs'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Roboto } from 'next/font/google'
-import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/sonner';
 import { Providers } from '@/providers/Providers';
 

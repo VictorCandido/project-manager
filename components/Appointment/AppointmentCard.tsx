@@ -10,18 +10,18 @@ import {
 } from "@/components/ui/card"
 import { Button } from "../ui/button";
 import { Pen, Trash2 } from "lucide-react";
-import { AppointmentCustormerProps } from "@/types/AppointmentCustormerProps";
+import { AppointmentCustomerProps } from "@/types/AppointmentCustomerProps";
 import { useModal } from "@/hooks/useModalStore";
 
 interface AppointmentCardProps {
-    data: AppointmentCustormerProps;
+    data: AppointmentCustomerProps;
 }
 
 const AppointmentCard = ({ data }: AppointmentCardProps) => {
     const { onOpen } = useModal();
 
     return (
-        <Card>
+        <Card className="mt-4">
             <CardHeader>
                 <CardTitle>{data.customer.name}</CardTitle>
                 <CardDescription>{data.start} - {data.end}</CardDescription>

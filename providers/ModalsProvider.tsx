@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import NewAppointmentModal from "../components/Appointment/NewAppointmentModal";
-import EditAppointmentModal from "@/components/Appointment/EditAppointmentModal";
-import DeleteAppointmentModal from "@/components/Appointment/DeleteAppointmentModal";
+import NewAppointmentModal from "../components/Appointment/modal/NewAppointmentModal";
+import EditAppointmentModal from "@/components/Appointment/modal/EditAppointmentModal";
+import DeleteAppointmentModal from "@/components/Appointment/modal/DeleteAppointmentModal";
 
 const ModalsProvider = () => {
     const [ isMounted, setIsMounted ] = useState(false);

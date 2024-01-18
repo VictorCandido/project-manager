@@ -1,11 +1,12 @@
 import { auth } from "@clerk/nextjs";
 import { db } from "./db";
+import { redirect } from "next/navigation";
 
 export const currentProfile = async () => {
     const { userId } = auth();
 
     if (!userId) {
-        return null;
+        return redirect('/');
     }
 
     const profile = await db.profile.findUnique({
@@ -13,6 +14,10 @@ export const currentProfile = async () => {
             userId
         }
     });
+
+    if (!profile) {
+        return redirect('/');
+    }
 
     return profile;
 }

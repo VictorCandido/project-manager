@@ -1,10 +1,10 @@
-import { AppointmentCustormerProps } from '@/types/AppointmentCustormerProps';
+import { AppointmentCustomerProps } from '@/types/AppointmentCustomerProps';
 import { create } from 'zustand';
 
 type ModalType = 'newAppointment' | 'editAppointment' | 'deleteAppointment';
 
 type modalData = {
-    appointmentData?: AppointmentCustormerProps;
+    appointmentData?: AppointmentCustomerProps;
 }
 
 interface ModalStore {
