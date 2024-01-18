@@ -53,6 +53,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
                         <Button
                             variant="outline"
                             className="w-full flex justify-between text-zinc-400"
+                            onClick={() => setOpen(true)}
                         >
                             Procurar...
                             <span className="text-xs">⌘ + K</span>
