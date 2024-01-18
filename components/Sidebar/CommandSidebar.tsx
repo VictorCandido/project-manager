@@ -1,9 +1,11 @@
-import { Laptop, Moon, Settings, Sun } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { Laptop, Moon, PlusCircle, Sun } from "lucide-react";
+import { useRouter, useSelectedLayoutSegment } from "next/navigation";
 import { useTheme } from "next-themes";
 
 import { menuItems } from "@/utils/menuItems";
 import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut } from "../ui/command";
+import { useModal } from "@/hooks/useModalStore";
+import { useCallback, useEffect } from "react";
 
 interface CommandSidebarProps {
     open: boolean;
@@ -13,11 +15,33 @@ interface CommandSidebarProps {
 const CommandSidebar = ({ open, setOpen }: CommandSidebarProps) => {
     const router = useRouter();
     const { setTheme } = useTheme();
+    const { onOpen } = useModal();
 
-    const runCommand = (command: () => unknown) => {
-        setOpen(false);
-        command();
-    }
+    const runCommand = useCallback((command: () => unknown) => {
+        setOpen(false)
+        command()
+    }, [setOpen]);
+
+    const redirectToApponintmentsAndOpenNewAppointmentModal = useCallback(() => {
+        router.push('/appointments');
+        onOpen('newAppointment');
+    }, [router, onOpen]);
+
+    // Quando Command estiver aberto e estiver na página de apontamentos
+    // e usuário digitar command + n
+    // Abre o modal de novo apontamento
+    useEffect(() => {
+        const down = (e: KeyboardEvent) => {
+            if (e.key === "n" && (e.metaKey || e.ctrlKey) && open) {
+                e.preventDefault();
+                runCommand(() => redirectToApponintmentsAndOpenNewAppointmentModal());
+            }
+        }
+
+        document.addEventListener("keydown", down);
+        return () => document.removeEventListener("keydown", down)
+    }, [onOpen, open, redirectToApponintmentsAndOpenNewAppointmentModal, runCommand]);
+
 
     return (
         <CommandDialog open={open} onOpenChange={setOpen}>
@@ -35,11 +59,12 @@ const CommandSidebar = ({ open, setOpen }: CommandSidebarProps) => {
 
                 <CommandSeparator />
 
-                <CommandGroup heading="Comandos">
-                    <CommandItem>
-                        <Settings className="mr-2 h-4 w-4" />
-                        <span>Settings</span>
-                        <CommandShortcut>⌘S</CommandShortcut>
+                <CommandGroup heading="Apontamentos">
+                    <CommandItem onSelect={() => runCommand(() => redirectToApponintmentsAndOpenNewAppointmentModal())}>
+                        <PlusCircle className="mr-2 h-4 w-4" />
+                        <span>Novo apontamento</span>
+
+                        <CommandShortcut>⌘ + N</CommandShortcut>
                     </CommandItem>
                 </CommandGroup>
 
