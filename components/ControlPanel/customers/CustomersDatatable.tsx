@@ -2,9 +2,11 @@
 
 import {
   ColumnDef,
+  ColumnFiltersState,
   SortingState,
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
@@ -21,6 +23,7 @@ import {
 import { CustomersDatatablePagination } from "./CustomersDatatablePagination"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { useState } from "react"
+import { Input } from "@/components/ui/input"
 
 interface CustomersDatatableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -29,6 +32,7 @@ interface CustomersDatatableProps<TData, TValue> {
 
 export function CustomersDatatable<TData, TValue>({ columns, data }: CustomersDatatableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const table = useReactTable({
     data,
@@ -37,13 +41,27 @@ export function CustomersDatatable<TData, TValue>({ columns, data }: CustomersDa
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
     state: {
       sorting,
+      columnFilters,
     },
   })
 
   return (
     <div>
+      <div className="flex items-center py-4">
+        <Input
+          placeholder="Filtrar por nome..."
+          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+          onChange={(event) =>
+            table.getColumn("name")?.setFilterValue(event.target.value)
+          }
+          className="max-w-sm"
+        />
+      </div>
+
       <div className="rounded-md border">
         <ScrollArea className="max-h-[calc(100vh-17rem)] overflow-auto">
           <Table>
