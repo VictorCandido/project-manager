@@ -2,9 +2,11 @@
 
 import {
   ColumnDef,
+  SortingState,
   flexRender,
   getCoreRowModel,
   getPaginationRowModel,
+  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
 
@@ -16,9 +18,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Button } from "@/components/ui/button"
 import { CustomersDatatablePagination } from "./CustomersDatatablePagination"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { useState } from "react"
 
 interface CustomersDatatableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -26,11 +28,18 @@ interface CustomersDatatableProps<TData, TValue> {
 }
 
 export function CustomersDatatable<TData, TValue>({ columns, data }: CustomersDatatableProps<TData, TValue>) {
+  const [sorting, setSorting] = useState<SortingState>([]);
+
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
+    state: {
+      sorting,
+    },
   })
 
   return (
