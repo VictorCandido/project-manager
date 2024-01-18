@@ -1,60 +1,24 @@
-"use client";
+import { UsersDatatableColumns } from "@/components/ControlPanel/users/UsersDatatableColumns";
+import { UsersDatatable } from "@/components/ControlPanel/users/UsersDatatable";
+import { db } from "@/lib/db"
+import { toast } from "sonner";
 
-import { DataTableColumnHeader } from "@/components/Datatable/DataTableColumnHeader";
-import { DataTableRowActions } from "@/components/Datatable/DataTableRowActions";
-import { DataTable } from "@/components/Datatable/Datatable";
-import { ColumnDef } from "@tanstack/react-table";
-import { z } from "zod";
+export default async function Users() {
+    const users = await getUsers();
 
-const userSchema = z.object({
-    id: z.string().min(1),
-    firstName: z.string().min(1),
-    lastName: z.string().min(1),
-    mail: z.string().min(1),
-    profileImage: z.string().optional(),
-});
-  
-type UserProps = z.infer<typeof userSchema>
-
-const Users = () => {
-    const data: UserProps[] = [
-        { id: '123', firstName: 'Victor', lastName: 'Candido', mail: 'victorev@outlook.com' },
-        { id: '1', firstName: 'Victor', lastName: 'Candido', mail: 'victorev@outlook.com' },
-        { id: '23', firstName: 'Victor', lastName: 'Candido', mail: 'victorev@outlook.com' },
-        { id: '3', firstName: 'Victor', lastName: 'Candido', mail: 'victorev@outlook.com' },
-        { id: '34', firstName: 'Victor', lastName: 'Candido', mail: 'victorev@outlook.com' },
-        { id: '5', firstName: 'Victor', lastName: 'Candido', mail: 'victorev@outlook.com' },
-    ];
-
-    const columns: ColumnDef<UserProps>[] = [
-        {
-            accessorKey: 'id',
-            header: ({ column }) => <DataTableColumnHeader column={column} title="ID"/>,
-        },
-        {
-            accessorKey: 'name',
-            header: ({ column }) => <DataTableColumnHeader column={column} title="Nome"/>,
-            cell: ({ row }) => <span>{ row.original.firstName } { row.original.lastName }</span> 
-        },
-        {
-            accessorKey: 'mail',
-            header: ({ column }) => <DataTableColumnHeader column={column} title="E-mail"/>,
-        },
-        // {
-        //     id: "actions",
-        //     cell: ({ row }) => <DataTableRowActions row={row} />,
-        // },
-    ];
+    async function getUsers() {
+        try {
+            const users = await db.profile.findMany();
+            return users;
+        } catch (error) {
+            console.log('Falha ao consultar usuários.', error);
+            toast.error('Falha ao consultar usuários.');
+        }
+    }
 
     return (
         <div>
-            Users
-            
-            <DataTable data={data} columns={columns} />
-
-
+            {users?.length && <UsersDatatable columns={UsersDatatableColumns} data={users} />}
         </div>
-    );
+    )
 }
- 
-export default Users;

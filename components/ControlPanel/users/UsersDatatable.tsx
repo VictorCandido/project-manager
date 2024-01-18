@@ -27,12 +27,12 @@ import { Input } from "@/components/ui/input"
 import { DataTableViewOptions } from "@/components/Datatable/DataTableViewOptions"
 import { DataTablePagination } from "@/components/Datatable/DataTablePagination"
 
-interface CustomersDatatableProps<TData, TValue> {
+interface UsersDatatableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
 }
 
-export function CustomersDatatable<TData, TValue>({ columns, data }: CustomersDatatableProps<TData, TValue>) {
+export function UsersDatatable<TData, TValue>({ columns, data }: UsersDatatableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -55,7 +55,7 @@ export function CustomersDatatable<TData, TValue>({ columns, data }: CustomersDa
   });
 
   useEffect(() => {
-    table.setColumnVisibility({ id: false, name: true });
+    table.setColumnVisibility({ id: false, userId: false, name: true, email: true, actions: true });
   }, [table]);
 
 
