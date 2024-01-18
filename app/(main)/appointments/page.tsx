@@ -77,6 +77,7 @@ export default async function PainelControle() {
         </div>
 
         <AppointmentHeader />
+
       </div>
 
       {/* CONTENT */}
