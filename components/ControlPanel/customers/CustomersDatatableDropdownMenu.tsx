@@ -3,14 +3,17 @@ import { Pencil, MoreHorizontal, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Customer } from "@prisma/client";
+import { useModal } from "@/hooks/useModalStore";
 
 interface CustomersDatatableDropdownMenuProps {
     customer: Customer;
 }
 
 const CustomersDatatableDropdownMenu = ({ customer }: CustomersDatatableDropdownMenuProps) => {
+    const { onOpen } = useModal();
+
     function handleEditCustomer() {
-        console.log('edit customer');
+        onOpen('editCustomer', { customerData: customer });
     }
 
     function handleRemoveCustomer() {

@@ -1,6 +1,6 @@
 "use client";
 
-import { Boxes, ChevronLeft, ChevronRight } from "lucide-react";
+import { Boxes, ChevronLeft, ChevronRight, Search } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
 import SidebarItem from "./SidebarItem";
 import { NavigateContext } from "@/contexts/NavigateContext";
@@ -52,11 +52,14 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
                     <div className="flex-1 px-3">
                         <Button
                             variant="outline"
-                            className="w-full flex justify-between text-zinc-400"
+                            className="w-full flex justify-between text-zinc-400 items-center"
                             onClick={() => setOpen(true)}
                         >
-                            Procurar...
-                            <span className="text-xs">⌘ + K</span>
+                            <div className={`flex gap-2`}>
+                                <Search size={18} />
+                                <span className={`${!isOpenSidebar && 'hidden'}`}>Procurar...</span>
+                            </div>
+                            <span className={`text-xs ${!isOpenSidebar && 'hidden'}`}>⌘ + K</span>
                         </Button>
 
                         {menuItems?.map((menu, index) => (
@@ -101,7 +104,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
                 <div className="w-full">
                     {children}
                 </div>
-            </div>
+            </div >
 
             <CommandSidebar open={open} setOpen={setOpen} />
         </>

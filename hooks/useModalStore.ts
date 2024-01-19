@@ -6,7 +6,7 @@ type ModalType = 'newAppointment' | 'editAppointment' | 'deleteAppointment' | 'n
 
 type modalData = {
     appointmentData?: AppointmentCustomerProps;
-    custormerData?: Customer;
+    customerData?: Customer;
 }
 
 interface ModalStore {
