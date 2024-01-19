@@ -3,9 +3,14 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useModal } from "@/hooks/useModalStore";
+import ResponseModel from "@/models/ResponseModel";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Customer } from "@prisma/client";
+import axios from "axios";
 import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const formSchema = z.object({
@@ -16,6 +21,7 @@ type ProfileType = z.infer<typeof formSchema>;
 
 const NewCustomerModal = () => {
     const { isOpen, onClose, type } = useModal();
+    const router = useRouter();
 
     const form = useForm<ProfileType>({
         resolver: zodResolver(formSchema),
@@ -28,12 +34,25 @@ const NewCustomerModal = () => {
     const isLoading = form.formState.isSubmitting;
 
     async function onSubmit(values: ProfileType) {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        try {
+            const { data } = await axios.post<ResponseModel<Customer>>("/api/customer", values);
 
-        console.log(values);
+            if (data.error) {
+                throw data.data;
+            }
+
+            toast.success("Cliente cadastrado com sucesso!");
+            form.reset();
+            router.refresh();
+            onClose();
+        } catch (error) {
+            console.log('Falha ao registrar cliente - ', error);
+            toast.error('Falha ao registrar cliente. Por favor tente novamente.');
+        }
     }
 
     function handleClose() {
+        form.reset();
         onClose();
     }
 
@@ -54,7 +73,7 @@ const NewCustomerModal = () => {
                             name="name"
                             render={({ field }) => (
                                 <FormItem className="w-full">
-                                    <FormLabel>Início</FormLabel>
+                                    <FormLabel>Nome</FormLabel>
 
                                     <FormControl>
                                         <Input

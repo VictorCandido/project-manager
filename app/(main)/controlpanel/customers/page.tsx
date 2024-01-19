@@ -7,18 +7,13 @@ export default async function Clientes() {
   const customers = await getCustomers();
 
   async function getCustomers() {
-    try {
-      const customers = await db.customer.findMany();
-      return customers;
-    } catch (error) {
-      console.log('Falha ao consultar clientes.', error);
-      toast.error('Falha ao consultar clientes.');
-    }
+    const customers = await db.customer.findMany();
+    return customers;
   }
 
   return (
     <div>
-      {customers?.length && <CustomersDatatable columns={CustomersDatatableColumns} data={customers} />}
+      <CustomersDatatable columns={CustomersDatatableColumns} data={customers} />
     </div>
   )
 }
