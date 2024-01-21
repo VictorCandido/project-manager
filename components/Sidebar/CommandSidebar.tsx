@@ -27,6 +27,11 @@ const CommandSidebar = ({ open, setOpen }: CommandSidebarProps) => {
         onOpen('newAppointment');
     }, [router, onOpen]);
 
+    const redirectToCustomersAndOpenNewCustomerModal = useCallback(() => {
+        router.push('/controlpanel/customers');
+        onOpen('newCustomer');
+    }, [router, onOpen]);
+
     // Quando Command estiver aberto e estiver na página de apontamentos
     // e usuário digitar command + n
     // Abre o modal de novo apontamento
@@ -72,11 +77,21 @@ const CommandSidebar = ({ open, setOpen }: CommandSidebarProps) => {
                     ))}
                 </CommandGroup>
 
-
                 <CommandGroup heading="Apontamentos">
                     <CommandItem onSelect={() => runCommand(() => redirectToApponintmentsAndOpenNewAppointmentModal())}>
                         <PlusCircle className="mr-2 h-4 w-4" />
                         <span>Novo apontamento</span>
+
+                        <CommandShortcut>⌘ + N</CommandShortcut>
+                    </CommandItem>
+                </CommandGroup>
+
+                <CommandSeparator />
+
+                <CommandGroup heading="Clientes">
+                    <CommandItem onSelect={() => runCommand(() => redirectToCustomersAndOpenNewCustomerModal())}>
+                        <PlusCircle className="mr-2 h-4 w-4" />
+                        <span>Novo cliente</span>
 
                         <CommandShortcut>⌘ + N</CommandShortcut>
                     </CommandItem>
