@@ -6,6 +6,7 @@ import EditAppointmentModal from "@/components/Appointment/modal/EditAppointment
 import DeleteAppointmentModal from "@/components/Appointment/modal/DeleteAppointmentModal";
 import NewCustomerModal from "@/components/ControlPanel/customers/modal/NewCustomerModal";
 import EditCustomerModal from "@/components/ControlPanel/customers/modal/EditCustomerModal";
+import DeleteCustomerModal from "@/components/ControlPanel/customers/modal/DeleteCustomerModal";
 
 const ModalsProvider = () => {
     const [isMounted, setIsMounted] = useState(false);
@@ -25,6 +26,7 @@ const ModalsProvider = () => {
             <DeleteAppointmentModal />
             <NewCustomerModal />
             <EditCustomerModal />
+            <DeleteCustomerModal />
         </>
     );
 }

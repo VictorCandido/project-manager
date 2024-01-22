@@ -17,7 +17,7 @@ const CustomersDatatableDropdownMenu = ({ customer }: CustomersDatatableDropdown
     }
 
     function handleRemoveCustomer() {
-        console.log('remove customer');
+        onOpen('deleteCustomer', { customerData: customer });
     }
 
     return (

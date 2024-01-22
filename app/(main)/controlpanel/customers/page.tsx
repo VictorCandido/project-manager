@@ -1,7 +1,6 @@
 import { CustomersDatatableColumns } from "@/components/ControlPanel/customers/CustomersDatatableColumns";
 import { CustomersDatatable } from "@/components/ControlPanel/customers/CustomersDatatable";
 import { db } from "@/lib/db"
-import { toast } from "sonner";
 
 export default async function Clientes() {
   const customers = await getCustomers();
