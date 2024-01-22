@@ -1,7 +1,9 @@
+import ComingSoon from "@/components/ComingSoon/ComingSoon";
+
 const Companies = () => {
     return (
-        <div>Companies</div>
+        <ComingSoon />
     );
 }
- 
+
 export default Companies;

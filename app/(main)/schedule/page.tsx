@@ -1,51 +1,53 @@
-"use client";
+// "use client";
 
-import dayGridPlugin from '@fullcalendar/daygrid'
-import timeGridPlugin from '@fullcalendar/timegrid'
-import interactionPlugin from '@fullcalendar/interaction'
-import FullCalendar from "@fullcalendar/react";
-import esLocale from '@fullcalendar/core/locales/pt-br';
-import { createRef, useContext, useEffect, useState } from 'react';
-import { DateSelectArg } from '@fullcalendar/core/index.js';
-import useWindowDimensions from '@/hooks/useWindowDimensions';
-import { NavigateContext } from '@/contexts/NavigateContext';
+import ComingSoon from "@/components/ComingSoon/ComingSoon";
+
+// import dayGridPlugin from '@fullcalendar/daygrid'
+// import timeGridPlugin from '@fullcalendar/timegrid'
+// import interactionPlugin from '@fullcalendar/interaction'
+// import FullCalendar from "@fullcalendar/react";
+// import esLocale from '@fullcalendar/core/locales/pt-br';
+// import { createRef, useContext, useEffect, useState } from 'react';
+// import { DateSelectArg } from '@fullcalendar/core/index.js';
+// import useWindowDimensions from '@/hooks/useWindowDimensions';
+// import { NavigateContext } from '@/contexts/NavigateContext';
 
 const CalendarPage = () => {
-    const { isOpenSidebar } = useContext(NavigateContext);
-    
-    const [domLoaded, setDomLoaded] = useState(false);
-    const calendarRef = createRef<FullCalendar>();
-    const { height } = useWindowDimensions();
-    
-    useEffect(() => {
-      setDomLoaded(true);
-    }, []);
+    // const { isOpenSidebar } = useContext(NavigateContext);
 
-    useEffect(() => {
-        setTimeout(() => {
-            calendarRef.current?.getApi().updateSize();
-        }, 300);
-    }, [isOpenSidebar, calendarRef]);
+    // const [domLoaded, setDomLoaded] = useState(false);
+    // const calendarRef = createRef<FullCalendar>();
+    // const { height } = useWindowDimensions();
 
-    function handleSelectDate(date: DateSelectArg) {
-        console.log(date);
+    // useEffect(() => {
+    //   setDomLoaded(true);
+    // }, []);
 
-        const nomeEvento = String(prompt('Digite o nome do evento'));
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         calendarRef.current?.getApi().updateSize();
+    //     }, 300);
+    // }, [isOpenSidebar, calendarRef]);
 
-        const calendar = calendarRef.current?.getApi();
-        calendar?.addEvent({
-            title: nomeEvento,
-            start: date.start,
-            end: date.end
-        });
-    }
+    // function handleSelectDate(date: DateSelectArg) {
+    //     console.log(date);
 
-    if (!domLoaded) return 'Loading...';
+    //     const nomeEvento = String(prompt('Digite o nome do evento'));
+
+    //     const calendar = calendarRef.current?.getApi();
+    //     calendar?.addEvent({
+    //         title: nomeEvento,
+    //         start: date.start,
+    //         end: date.end
+    //     });
+    // }
+
+    // if (!domLoaded) return 'Loading...';
 
     return (
         <div>
             {/* <Button onClick={() => update()}>Atualizar</Button> */}
-            {domLoaded && (
+            {/* {domLoaded && (
                 <FullCalendar
                     height={height - 110}
                     windowResizeDelay={300}
@@ -66,9 +68,10 @@ const CalendarPage = () => {
                     // dateClick={(date) => console.log(date)}
                     select={handleSelectDate}
                 />
-            )}
+            )} */}
+            <ComingSoon />
         </div>
     );
 }
- 
+
 export default CalendarPage;

@@ -1,5 +1,7 @@
 // "use client";
 
+import ComingSoon from "@/components/ComingSoon/ComingSoon";
+
 // import { DataTable } from "@/components/Datatable/Datatable";
 
 // import { ColumnDef } from "@tanstack/react-table"
@@ -167,6 +169,7 @@ export default function Projetos() {
   return (
     <div className="hidden h-full flex-1 flex-col space-y-8 md:flex">
       {/* <DataTable data={tasks} columns={columns} /> */}
+      <ComingSoon />
     </div>
   )
 }

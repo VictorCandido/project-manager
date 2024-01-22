@@ -20,7 +20,7 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
                         width={5304}
                         height={7952}
                         alt="background image"
-                        className="absolute inset-0"
+                        className="absolute inset-0 max-h-screen"
                     />
 
                     <div className="absolute inset-0 bg-zinc-900/60" />
