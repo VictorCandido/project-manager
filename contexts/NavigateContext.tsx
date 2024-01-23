@@ -1,3 +1,5 @@
+'use client';
+
 import { ReactNode, createContext, useState } from "react";
 
 interface selectedPage {
@@ -19,8 +21,8 @@ interface ContextProviderProps {
 }
 
 export function NavigateProvider({ children }: ContextProviderProps) {
-    const [ isOpenSidebar, setIsOpenSidebar ] = useState(true);
-    const [ page, setPage ] = useState<selectedPage>({ key: '', title: '' });
+    const [isOpenSidebar, setIsOpenSidebar] = useState(true);
+    const [page, setPage] = useState<selectedPage>({ key: '', title: '' });
 
     const value: NavigateContextProps = {
         isOpenSidebar,
@@ -31,7 +33,7 @@ export function NavigateProvider({ children }: ContextProviderProps) {
 
     return (
         <NavigateContext.Provider value={value}>
-            { children }
+            {children}
         </NavigateContext.Provider>
     );
 }
