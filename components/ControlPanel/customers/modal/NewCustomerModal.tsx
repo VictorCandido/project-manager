@@ -1,52 +1,42 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+
+import UploadComponent from "@/components/UploadThing/UploadComponent";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useModal } from "@/hooks/useModalStore";
-import ResponseModel from "@/models/ResponseModel";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Customer } from "@prisma/client";
-import axios from "axios";
-import { Loader2 } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import { z } from "zod";
-
-const formSchema = z.object({
-    name: z.string().min(1, { message: "Informe o nome" }),
-});
-
-type ProfileType = z.infer<typeof formSchema>;
+import { CustomerSchemaType, customerSchema } from "@/schemas/CustomerSchema";
+import { createCustomer } from "@/services/CustomerService";
 
 const NewCustomerModal = () => {
     const { isOpen, onClose, type } = useModal();
     const router = useRouter();
 
-    const form = useForm<ProfileType>({
-        resolver: zodResolver(formSchema),
+    const form = useForm<CustomerSchemaType>({
+        resolver: zodResolver(customerSchema),
         defaultValues: {
-            name: "",
-        },
+            imageUrl: '',
+            name: '',
+        }
     });
 
     const isModalOpen = isOpen && type === "newCustomer";
     const isLoading = form.formState.isSubmitting;
 
-    async function onSubmit(values: ProfileType) {
+    async function onSubmit(values: CustomerSchemaType) {
         try {
-            const { data } = await axios.post<ResponseModel<Customer>>("/api/customer", values);
-
-            if (data.error) {
-                throw data.data;
-            }
+            await createCustomer(values);
 
             toast.success("Cliente cadastrado com sucesso!");
             form.reset();
             router.refresh();
             onClose();
         } catch (error) {
-            console.log('Falha ao registrar cliente - ', error);
             toast.error('Falha ao registrar cliente. Por favor tente novamente.');
         }
     }
@@ -68,6 +58,27 @@ const NewCustomerModal = () => {
 
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                        <FormField
+                            control={form.control}
+                            name="imageUrl"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Logo</FormLabel>
+                                    <div className="flex items-center justify-center text-center">
+
+                                        <FormControl>
+                                            <UploadComponent
+                                                value={field.value}
+                                                onChange={field.onChange}
+                                            />
+                                        </FormControl>
+
+                                    </div>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
                         <FormField
                             control={form.control}
                             name="name"

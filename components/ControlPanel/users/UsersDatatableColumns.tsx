@@ -31,7 +31,7 @@ export const UsersDatatableColumns: ColumnDef<Profile>[] = [
             </Avatar>
           </div>
           <div className="ml-4">
-            <div className="text-sm font-medium text-gray-900">{row.original.name}</div>
+            <div className="text-sm font-medium">{row.original.name}</div>
           </div>
         </div>
       )

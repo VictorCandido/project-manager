@@ -9,12 +9,12 @@ type AppointmentDataProps = {
 }
 
 const AppointmentData = ({ groupedAppointments }: AppointmentDataProps) => {
-        const { filterDate } = useFilterAppointment();
+    const { filterDate } = useFilterAppointment();
 
-    return <AppointmentDay 
-                groupedAppointments={groupedAppointments}
-                filterDate={filterDate}
-            />;
+    return <AppointmentDay
+        groupedAppointments={groupedAppointments}
+        filterDate={filterDate}
+    />;
 }
- 
+
 export default AppointmentData;
