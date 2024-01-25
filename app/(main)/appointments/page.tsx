@@ -5,12 +5,10 @@ import AppointmentData from "@/components/Appointment/AppointmentData";
 import AppointmentHeader from "@/components/Appointment/AppointmentHeader";
 import { currentProfile } from "@/lib/currentProfile";
 import { redirect } from "next/navigation";
-import { db } from "@/lib/db";
 import { AppointmentCustomerProps } from "@/types/AppointmentCustomerProps";
 import { GroupedAppointmentCustomerProps } from "@/types/GroupedAppointmentCustomerProps";
-import { Profile } from "@prisma/client";
-import { useFilterAppointment } from "@/hooks/useFilterAppointmentStore";
 import { Metadata } from "next";
+import { listAppointments } from "@/services/AppointmentService";
 
 export const metadata: Metadata = {
   title: "Apontamentos | Project Manager"
@@ -23,20 +21,8 @@ export default async function PainelControle() {
     return redirect('/');
   }
 
-  const appointments = await getAppointments(profile);
+  const appointments = await listAppointments();
   const groupedAppointments = groupAppoitments(appointments);
-
-  async function getAppointments(profile: Profile) {
-    const appointments = await db.appointment.findMany({
-      where: {
-        profileId: profile.id
-      },
-      include: { customer: true },
-      orderBy: { date: 'desc' },
-    });
-
-    return appointments;
-  }
 
   function groupAppoitments(appointments: AppointmentCustomerProps[]) {
     const groupedAppointments = new Array<GroupedAppointmentCustomerProps>();

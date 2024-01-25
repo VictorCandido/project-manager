@@ -10,26 +10,22 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
-import axios from "axios";
-import ResponseModel from "@/models/ResponseModel";
-import { Appointment } from "@prisma/client";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { deleteAppointment } from "@/services/AppointmentService";
 
 const DeleteAppointmentModal = () => {
     const { isOpen, onClose, type, data: { appointmentData } } = useModal();
     const router = useRouter();
 
     const isModalOpen = isOpen && type === 'deleteAppointment';
-    
+
     async function handleConfirm() {
         try {
-            const { data } = await axios.delete<ResponseModel<Appointment>>(`/api/appointment/${appointmentData?.id}`);
-            
-            if (data.error) {
-                throw data.data;
+            if (appointmentData) {
+                await deleteAppointment(appointmentData.id);
             }
-    
+
             toast.success('Apontamento removido com sucesso.');
             router.refresh();
             onClose();
@@ -57,5 +53,5 @@ const DeleteAppointmentModal = () => {
         </AlertDialog>
     );
 }
- 
+
 export default DeleteAppointmentModal;

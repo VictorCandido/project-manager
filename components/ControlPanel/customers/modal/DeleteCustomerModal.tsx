@@ -15,6 +15,7 @@ import ResponseModel from "@/models/ResponseModel";
 import { Appointment } from "@prisma/client";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { deleteCustomer } from "@/services/CustomerService";
 
 const DeleteCustomerModal = () => {
     const { isOpen, onClose, type, data: { customerData } } = useModal();
@@ -24,10 +25,8 @@ const DeleteCustomerModal = () => {
 
     async function handleConfirm() {
         try {
-            const { data } = await axios.delete<ResponseModel<Appointment>>(`/api/customer/${customerData?.id}`);
-
-            if (data.error) {
-                throw data.data;
+            if (customerData) {
+                await deleteCustomer(customerData.id);
             }
 
             toast.success('Cliente removido com sucesso.');

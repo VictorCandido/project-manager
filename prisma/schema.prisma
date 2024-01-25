@@ -41,10 +41,10 @@ model Appointment {
   end         String
   description String   @db.Text
 
-  customer   Customer @relation(fields: [customerId], references: [id])
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: NoAction)
   customerId String
 
-  profile   Profile @relation(fields: [profileId], references: [id])
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Restrict)
   profileId String
 
   createdAt DateTime @default(now())

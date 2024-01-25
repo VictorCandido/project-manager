@@ -1,17 +1,49 @@
+'use server';
+
+import { currentProfile } from "@/lib/currentProfile";
+import { db } from "@/lib/db";
 import ResponseModel from "@/models/ResponseModel";
 import { AppointmentSchemaType } from "@/schemas/AppointmentSchema";
 import { Appointment } from "@prisma/client";
 import axios from "axios";
 
-export async function createAppointment(values: AppointmentSchemaType) {
+export async function listAppointments() {
+    const profile = await currentProfile();
+
     try {
-        const { data } = await axios.post<ResponseModel<Appointment>>('/api/appointment', values);
+        const appointments = await db.appointment.findMany({
+            where: {
+                profileId: profile.id
+            },
+            include: { customer: true },
+            orderBy: { date: 'desc' },
+        });
 
-        if (data.error) {
-            throw data.data;
-        }
+        return appointments;
+    } catch (error) {
+        console.log('Falha ao listar agendamentos - ', error);
+        throw error;
+    }
+}
 
-        return data.data;
+export async function createAppointment(values: AppointmentSchemaType) {
+    const profile = await currentProfile();
+
+    try {
+        const { date, description, customer, start, end } = values;
+
+        const newAppointment = await db.appointment.create({
+            data: {
+                customerId: customer,
+                date,
+                description,
+                end,
+                start,
+                profileId: profile.id
+            }
+        });
+
+        return newAppointment;
     }
     catch (error) {
         console.log('Falha ao registrar agendamento - ', error);
@@ -19,18 +51,50 @@ export async function createAppointment(values: AppointmentSchemaType) {
     }
 }
 
-export async function updateAppointment(values: AppointmentSchemaType, appointmentDataId: string) {
+export async function updateAppointment(values: AppointmentSchemaType, appointmentId: string) {
+    const profile = await currentProfile();
+
     try {
-        const { data } = await axios.put<ResponseModel<Appointment>>(`/api/appointment/${appointmentDataId}`, values);
+        const { date, description, customer, start, end } = values;
 
-        if (data.error) {
-            throw data.data;
-        }
+        const updatedAppointment = await db.appointment.update({
+            where: {
+                id: appointmentId,
+                profileId: profile.id
+            },
+            data: {
+                customerId: customer,
+                date,
+                description,
+                end,
+                start,
+                profileId: profile.id
+            }
+        });
 
-        return data.data;
+        return updatedAppointment;
     }
     catch (error) {
         console.log('Falha ao atualizar agendamento - ', error);
+        throw error;
+    }
+}
+
+export async function deleteAppointment(appointmentId: string) {
+    const profile = await currentProfile();
+
+    try {
+        const deletedAppointment = await db.appointment.delete({
+            where: {
+                id: appointmentId,
+                profileId: profile.id
+            }
+        });
+
+        return deletedAppointment;
+    }
+    catch (error) {
+        console.log('Falha ao deletar agendamento - ', error);
         throw error;
     }
 }
