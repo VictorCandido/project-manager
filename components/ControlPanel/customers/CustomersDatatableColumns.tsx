@@ -5,13 +5,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import CustomersDatatableDropdownMenu from "./CustomersDatatableDropdownMenu";
 import { DataTableColumnHeader } from "@/components/Datatable/DataTableColumnHeader";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
-function getNameFeedback(name: string): string {
-  return name
-    .split(' ')
-    .map(name => name.charAt(0).toUpperCase())
-    .join('');
-}
+import { getNameFeedback } from "@/utils/globalFunctions";
 
 export const CustomersDatatableColumns: ColumnDef<Customer>[] = [
   {

@@ -12,6 +12,8 @@ import { Button } from "../ui/button";
 import { Pen, Trash2 } from "lucide-react";
 import { AppointmentCustomerProps } from "@/types/AppointmentCustomerProps";
 import { useModal } from "@/hooks/useModalStore";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { getNameFeedback } from "@/utils/globalFunctions";
 
 interface AppointmentCardProps {
     data: AppointmentCustomerProps;
@@ -23,7 +25,13 @@ const AppointmentCard = ({ data }: AppointmentCardProps) => {
     return (
         <Card className="mt-4">
             <CardHeader>
-                <CardTitle>{data.customer.name}</CardTitle>
+                <CardTitle className="flex items-center gap-4">
+                    <Avatar>
+                        <AvatarImage src={data.customer.imageUrl || ''} />
+                        <AvatarFallback>{getNameFeedback(data.customer.name)}</AvatarFallback>
+                    </Avatar>
+                    {data.customer.name}
+                </CardTitle>
                 <CardDescription>{data.start} - {data.end}</CardDescription>
             </CardHeader>
             <CardContent className="whitespace-pre-wrap">
@@ -31,15 +39,15 @@ const AppointmentCard = ({ data }: AppointmentCardProps) => {
             </CardContent>
             <CardFooter>
                 <div className="flex gap-4 justify-end w-full">
-                    <Button 
+                    <Button
                         className="gap-2"
                         onClick={() => onOpen('editAppointment', { appointmentData: data })}
                     >
                         <Pen /> Editar
                     </Button>
 
-                    <Button 
-                        className="gap-2" 
+                    <Button
+                        className="gap-2"
                         variant="destructive"
                         onClick={() => onOpen('deleteAppointment', { appointmentData: data })}
                     >
@@ -50,5 +58,5 @@ const AppointmentCard = ({ data }: AppointmentCardProps) => {
         </Card>
     );
 }
- 
+
 export default AppointmentCard;
