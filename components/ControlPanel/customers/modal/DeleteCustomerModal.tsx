@@ -10,12 +10,10 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
-import axios from "axios";
-import ResponseModel from "@/models/ResponseModel";
-import { Appointment } from "@prisma/client";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { deleteCustomer } from "@/services/CustomerService";
+import { listAppointmentsByCustomer } from "@/services/AppointmentService";
 
 const DeleteCustomerModal = () => {
     const { isOpen, onClose, type, data: { customerData } } = useModal();
@@ -26,11 +24,18 @@ const DeleteCustomerModal = () => {
     async function handleConfirm() {
         try {
             if (customerData) {
-                await deleteCustomer(customerData.id);
-            }
+                const appointmentsByCustomer = await listAppointmentsByCustomer(customerData.id);
 
-            toast.success('Cliente removido com sucesso.');
-            router.refresh();
+                if (appointmentsByCustomer.length > 0) {
+                    toast.warning('Não é possível remover um cliente que possui apontamentos.');
+                    return;
+                }
+
+                await deleteCustomer(customerData.id);
+
+                toast.success('Cliente removido com sucesso.');
+                router.refresh();
+            }
             onClose();
         } catch (error) {
             console.log('Falha ao remover cliente - ', error);

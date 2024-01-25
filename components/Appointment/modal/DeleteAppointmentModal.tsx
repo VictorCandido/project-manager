@@ -24,11 +24,11 @@ const DeleteAppointmentModal = () => {
         try {
             if (appointmentData) {
                 await deleteAppointment(appointmentData.id);
-            }
 
-            toast.success('Apontamento removido com sucesso.');
-            router.refresh();
-            onClose();
+                toast.success('Apontamento removido com sucesso.');
+                router.refresh();
+                onClose();
+            }
         } catch (error) {
             console.log('Falha ao remover apontamento - ', error);
             toast.error('Falha ao remover apontamento. Por favor tente novamente.');

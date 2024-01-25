@@ -2,10 +2,7 @@
 
 import { currentProfile } from "@/lib/currentProfile";
 import { db } from "@/lib/db";
-import ResponseModel from "@/models/ResponseModel";
 import { AppointmentSchemaType } from "@/schemas/AppointmentSchema";
-import { Appointment } from "@prisma/client";
-import axios from "axios";
 
 export async function listAppointments() {
     const profile = await currentProfile();
@@ -22,6 +19,23 @@ export async function listAppointments() {
         return appointments;
     } catch (error) {
         console.log('Falha ao listar agendamentos - ', error);
+        throw error;
+    }
+}
+
+export async function listAppointmentsByCustomer(customerId: string) {
+    try {
+        const appointments = await db.appointment.findMany({
+            where: {
+                customerId
+            },
+            include: { customer: true },
+            orderBy: { date: 'desc' },
+        });
+
+        return appointments;
+    } catch (error) {
+        console.log('Falha ao listar agendamentos por clientes - ', error);
         throw error;
     }
 }
