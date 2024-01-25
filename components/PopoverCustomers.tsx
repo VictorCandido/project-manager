@@ -5,11 +5,11 @@ import { Button } from "./ui/button";
 import { FormControl } from "./ui/form";
 import { useEffect, useState } from "react";
 import { Customer } from "@prisma/client";
-import { listCustomers } from "@/services/CustomerService";
+import { listCustomers } from "@/services/customer-service";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { ControllerRenderProps, UseFormReturn } from "react-hook-form";
-import { AppointmentSchemaType } from "@/schemas/AppointmentSchema";
+import { AppointmentSchemaType } from "@/schemas/appointment-schema";
 
 interface PopoverCustomersProps {
     field: ControllerRenderProps<AppointmentSchemaType, 'customer'>;

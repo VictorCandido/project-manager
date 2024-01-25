@@ -1,6 +1,6 @@
 // "use client";
 
-import ComingSoon from "@/components/ComingSoon/ComingSoon";
+import ComingSoon from "@/components/coming-soon/coming-soon";
 
 // import { DataTable } from "@/components/Datatable/Datatable";
 

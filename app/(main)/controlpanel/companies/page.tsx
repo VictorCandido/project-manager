@@ -1,4 +1,4 @@
-import ComingSoon from "@/components/ComingSoon/ComingSoon";
+import ComingSoon from "@/components/coming-soon/coming-soon";
 
 const Companies = () => {
     return (
