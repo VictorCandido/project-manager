@@ -13,7 +13,7 @@ import { ptBR } from "date-fns/locale/pt-BR";
 import { format } from "date-fns";
 import { useFilterAppointment } from "@/hooks/use-filter-appointment-store";
 
-const AppointmentHeader = () => {
+export default function AppointmentHeader() {
     const [openPopover, setOpenPopover] = useState<boolean>(false);
     const { onOpen } = useModal();
     const { filterDate } = useFilterAppointment.getState();
@@ -53,5 +53,3 @@ const AppointmentHeader = () => {
         </div>
     );
 }
-
-export default AppointmentHeader;
