@@ -1,11 +1,10 @@
-import { CalendarIcon, CheckIcon, ChevronDown, Loader2 } from "lucide-react";
+import { CalendarIcon, Loader2 } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale/pt-BR";
 import { useModal } from "@/hooks/useModalStore";
 import { useState } from "react";
-import { Customer } from "@prisma/client";
 import { toast } from "sonner"
 import { useRouter } from "next/navigation";
 
@@ -31,22 +30,12 @@ import {
     FormLabel,
     FormMessage
 } from "@/components/ui/form"
-import {
-    Command,
-    CommandEmpty,
-    CommandGroup,
-    CommandInput,
-    CommandItem
-} from "../../ui/command";
 import { AppointmentSchema, AppointmentSchemaType } from "@/schemas/AppointmentSchema";
-import { listCustomers } from "@/services/CustomerService";
 import { formatTime } from "@/utils/globalFunctions";
 import { createAppointment } from "@/services/AppointmentService";
+import PopoverCustomers from "@/components/PopoverCustomers";
 
 const NewAppointmentModal = () => {
-    const [customers, setCustomers] = useState<Customer[]>([]);
-    const [customersLoading, setCustomersLoading] = useState<boolean>(false);
-    const [openCustomerPopover, setOpenCustomerPopover] = useState<boolean>(false);
     const [openDatePopover, setOpenDatePopover] = useState<boolean>(false);
 
     const router = useRouter();
@@ -85,33 +74,10 @@ const NewAppointmentModal = () => {
         onClose();
     }
 
-    async function loadCustomers(isOpen: boolean) {
-        try {
-            if (isOpen) {
-                setCustomers(new Array());
-                setCustomersLoading(true);
-
-                const customersArray = await listCustomers();
-
-                setCustomers(customersArray);
-            }
-        } catch (error) {
-            console.log('Falha ao consultar clientes - ', error);
-            toast.error('Falha ao consultar clientes. Por favor tente novamente.');
-        }
-
-        setCustomersLoading(false);
-    }
-
     function getDateWhithoutHours() {
         const dateNow = new Date();
         const dateString = `${dateNow.getFullYear()}-${dateNow.getMonth() + 1}-${dateNow.getDate()}`;
         return new Date(dateString);
-    }
-
-    function handleOpenCustomerPopover(open: boolean) {
-        loadCustomers(open);
-        setOpenCustomerPopover(open);
     }
 
     return (
@@ -134,62 +100,7 @@ const NewAppointmentModal = () => {
                                 <FormItem className="flex flex-col">
                                     <FormLabel>Cliente</FormLabel>
 
-                                    <Popover open={openCustomerPopover} onOpenChange={handleOpenCustomerPopover}>
-                                        <PopoverTrigger asChild>
-                                            <FormControl>
-                                                <Button
-                                                    variant='outline'
-                                                    role="combobox"
-                                                    className={cn(
-                                                        "w-full justify-between",
-                                                        !field.value && "text-muted-foreground"
-                                                    )}
-                                                >
-                                                    {field.value
-                                                        ? customers.find((customer) => customer.id === field.value)?.name
-                                                        : 'Selecione um cliente'}
-
-
-                                                    <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                                                </Button>
-                                            </FormControl>
-                                        </PopoverTrigger>
-
-                                        <PopoverContent className="p-0 PopoverContent">
-                                            <Command>
-                                                <CommandInput
-                                                    placeholder="Digite para pesquisar..."
-                                                    className="h-9"
-                                                />
-
-                                                <CommandEmpty>{customersLoading ? 'Carregando...' : 'Nenhum cliente encontrado.'}</CommandEmpty>
-
-                                                <CommandGroup>
-                                                    {customers.map((customer) => (
-                                                        <CommandItem
-                                                            value={customer.name}
-                                                            key={customer.id}
-                                                            onSelect={() => {
-                                                                form.setValue('customer', customer.id);
-                                                                form.trigger('customer');
-                                                                setOpenCustomerPopover(openCustomerPopover => !openCustomerPopover);
-                                                            }}
-                                                        >
-                                                            {customer.name}
-                                                            <CheckIcon
-                                                                className={cn(
-                                                                    "ml-auto h-4 w-4",
-                                                                    customer.id === field.value
-                                                                        ? "opacity-100"
-                                                                        : "opacity-0"
-                                                                )}
-                                                            />
-                                                        </CommandItem>
-                                                    ))}
-                                                </CommandGroup>
-                                            </Command>
-                                        </PopoverContent>
-                                    </Popover>
+                                    <PopoverCustomers field={field} form={form} />
 
                                     <FormMessage />
                                 </FormItem>
