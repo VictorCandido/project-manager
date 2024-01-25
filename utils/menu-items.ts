@@ -1,4 +1,4 @@
-import { MenuItemInterface } from "@/types/MenuItemInterface";
+import { MenuItemInterface } from "@/types/menu-item-interface";
 import { CalendarDays, ClipboardPenLine, FolderGit2, Globe, LayoutDashboard, Settings, UserRoundCog, Users } from "lucide-react";
 
 export const menuItems: Array<MenuItemInterface> = [

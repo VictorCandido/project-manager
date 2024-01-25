@@ -1,8 +1,8 @@
 'use server';
 
-import { currentProfile } from "@/lib/currentProfile";
+import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
-import { AppointmentSchemaType } from "@/schemas/AppointmentSchema";
+import { AppointmentSchemaType } from "@/schemas/appointment-schema";
 
 export async function listAppointments() {
     const profile = await currentProfile();

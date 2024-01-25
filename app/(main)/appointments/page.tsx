@@ -2,13 +2,13 @@ import { Suspense } from "react";
 import { redirect } from "next/navigation";
 import { Metadata } from "next";
 
-import AppointmentSkeleton from "@/components/Appointment/AppointmentDaySkeleton";
-import AppointmentData from "@/components/Appointment/AppointmentData";
-import AppointmentHeader from "@/components/Appointment/AppointmentHeader";
-import { currentProfile } from "@/lib/currentProfile";
-import { AppointmentCustomerProps } from "@/types/AppointmentCustomerProps";
-import { GroupedAppointmentCustomerProps } from "@/types/GroupedAppointmentCustomerProps";
-import { listAppointments } from "@/services/AppointmentService";
+import AppointmentSkeleton from "@/components/Appointment/appointment-day-skeleton";
+import AppointmentData from "@/components/Appointment/appointment-data";
+import AppointmentHeader from "@/components/Appointment/appointment-header";
+import { currentProfile } from "@/lib/current-profile";
+import { AppointmentCustomerProps } from "@/types/appointment-customer-props";
+import { GroupedAppointmentCustomerProps } from "@/types/grouped-appointment-customer-props";
+import { listAppointments } from "@/services/appointment-service";
 
 export const metadata: Metadata = {
   title: "Apontamentos | Project Manager"

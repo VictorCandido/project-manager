@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation"
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "../ui/button"
-import { controlPanelMenuItems } from "@/utils/menuItems"
+import { controlPanelMenuItems } from "@/utils/menu-items"
 
 interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
 }

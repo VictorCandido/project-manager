@@ -24,11 +24,11 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { useEffect, useState } from "react"
 import { Input } from "@/components/ui/input"
-import { DataTableViewOptions } from "@/components/Datatable/DataTableViewOptions"
-import { DataTablePagination } from "@/components/Datatable/DataTablePagination"
+import { DataTableViewOptions } from "@/components/Datatable/datatable-view-options"
+import { DataTablePagination } from "@/components/Datatable/datatable-pagination"
 import { Button } from "@/components/ui/button"
 import { Plus } from "lucide-react"
-import { useModal } from "@/hooks/useModalStore"
+import { useModal } from "@/hooks/use-modal-store"
 
 interface CustomersDatatableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]

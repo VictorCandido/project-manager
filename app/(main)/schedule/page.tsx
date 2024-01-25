@@ -1,6 +1,6 @@
 // "use client";
 
-import ComingSoon from "@/components/ComingSoon/ComingSoon";
+import ComingSoon from "@/components/ComingSoon/coming-soon";
 
 // import dayGridPlugin from '@fullcalendar/daygrid'
 // import timeGridPlugin from '@fullcalendar/timegrid'

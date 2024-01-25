@@ -2,9 +2,9 @@ import { Laptop, Moon, PlusCircle, Sun } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 
-import { controlPanelMenuItems, menuItems } from "@/utils/menuItems";
+import { controlPanelMenuItems, menuItems } from "@/utils/menu-items";
 import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut } from "../ui/command";
-import { useModal } from "@/hooks/useModalStore";
+import { useModal } from "@/hooks/use-modal-store";
 import { useCallback, useEffect } from "react";
 
 interface CommandSidebarProps {

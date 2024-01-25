@@ -3,8 +3,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale/pt-BR";
-import { useModal } from "@/hooks/useModalStore";
-import { useEffect, useState } from "react";
+import { useModal } from "@/hooks/use-modal-store";
+import { useState } from "react";
 import { toast } from "sonner"
 import { useRouter } from "next/navigation";
 
@@ -30,16 +30,16 @@ import {
     FormLabel,
     FormMessage
 } from "@/components/ui/form"
-import { AppointmentSchema, AppointmentSchemaType } from "@/schemas/AppointmentSchema";
-import { formatTime } from "@/utils/globalFunctions";
-import { updateAppointment } from "@/services/AppointmentService";
+import { AppointmentSchema, AppointmentSchemaType } from "@/schemas/appointment-schema";
+import { formatTime } from "@/utils/global-functions";
+import { createAppointment } from "@/services/appointment-service";
 import PopoverCustomers from "@/components/PopoverCustomers";
 
-const EditAppointmentModal = () => {
+const NewAppointmentModal = () => {
     const [openDatePopover, setOpenDatePopover] = useState<boolean>(false);
 
     const router = useRouter();
-    const { isOpen, onClose, type, data: { appointmentData } } = useModal();
+    const { isOpen, onClose, type } = useModal();
 
     const form = useForm<AppointmentSchemaType>({
         resolver: zodResolver(AppointmentSchema),
@@ -52,36 +52,25 @@ const EditAppointmentModal = () => {
         },
     });
 
-    const isModalOpen = isOpen && type === 'editAppointment';
+    const isModalOpen = isOpen && type === 'newAppointment';
     const isLoading = form.formState.isSubmitting;
-
-    useEffect(() => {
-        if (appointmentData) {
-            form.setValue('customer', appointmentData.customerId);
-            form.setValue('date', appointmentData.date);
-            form.setValue('description', appointmentData.description);
-            form.setValue('end', appointmentData.end);
-            form.setValue('start', appointmentData.start);
-        }
-    }, [appointmentData, form]);
 
     async function onSubmit(values: AppointmentSchemaType) {
         try {
-            if (appointmentData) {
-                await updateAppointment(values, appointmentData.id);
+            await createAppointment(values);
 
-                toast.success('Apontamento atualizado com sucesso.');
-                form.reset();
-                router.refresh();
-                onClose();
-            }
+            toast.success('Apontamento criado com sucesso.');
+            form.reset();
+            router.refresh();
+            onClose();
         } catch (error) {
-            console.log('Falha ao atualizar apontamento - ', error);
-            toast.error('Falha ao atualizar apontamento. Por favor tente novamente.');
+            console.log('Falha ao registrar apontamento - ', error);
+            toast.error('Falha ao registrar apontamento. Por favor tente novamente.');
         }
     }
 
     function handleClose() {
+        form.reset();
         onClose();
     }
 
@@ -95,7 +84,7 @@ const EditAppointmentModal = () => {
         <Dialog open={isModalOpen} onOpenChange={handleClose}>
             <DialogContent className="sm:max-w-7xl">
                 <DialogHeader>
-                    <DialogTitle>Editar Apontamento</DialogTitle>
+                    <DialogTitle>Novo Apontamento</DialogTitle>
                     <DialogDescription>
                         Insira a descrição de suas atividades.
                     </DialogDescription>
@@ -240,4 +229,4 @@ const EditAppointmentModal = () => {
     );
 }
 
-export default EditAppointmentModal;
+export default NewAppointmentModal;

@@ -1,6 +1,6 @@
 
 import { Skeleton } from "../ui/skeleton";
-import AppointmentCardSkeleton from "./AppointmentCardSkeleton";
+import AppointmentCardSkeleton from "./appointment-card-skeleton";
 
 const AppointmentDaySkeleton = () => {
     return (

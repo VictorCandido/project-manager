@@ -1,6 +1,6 @@
 'use server';
 
-import { CustomerSchemaType } from "@/schemas/CustomerSchema";
+import { CustomerSchemaType } from "@/schemas/customer-schema";
 import { db } from "@/lib/db";
 
 export async function listCustomers() {

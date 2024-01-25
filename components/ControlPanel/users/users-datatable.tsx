@@ -24,8 +24,8 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { useEffect, useState } from "react"
 import { Input } from "@/components/ui/input"
-import { DataTableViewOptions } from "@/components/Datatable/DataTableViewOptions"
-import { DataTablePagination } from "@/components/Datatable/DataTablePagination"
+import { DataTableViewOptions } from "@/components/Datatable/datatable-view-options"
+import { DataTablePagination } from "@/components/Datatable/datatable-pagination"
 
 interface UsersDatatableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]

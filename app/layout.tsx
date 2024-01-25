@@ -4,9 +4,9 @@ import type { Metadata } from 'next'
 
 import './globals.css'
 import { Toaster } from '@/components/ui/sonner';
-import ModalsProvider from "@/providers/ModalsProvider";
-import { ThemeProvider } from "@/providers/ThemeProvider";
-import { NavigateProvider } from "@/contexts/NavigateContext";
+import ModalsProvider from "@/providers/modals-provider";
+import { ThemeProvider } from "@/providers/theme-provider";
+import { NavigateProvider } from "@/contexts/navigate-context";
 
 const roboto = Roboto({
   weight: ['400', '700', '900'],

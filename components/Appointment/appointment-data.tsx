@@ -1,8 +1,8 @@
 "use client";
 
-import { GroupedAppointmentCustomerProps } from "@/types/GroupedAppointmentCustomerProps";
-import AppointmentDay from "./AppointmentDay";
-import { useFilterAppointment } from "@/hooks/useFilterAppointmentStore";
+import { GroupedAppointmentCustomerProps } from "@/types/grouped-appointment-customer-props";
+import AppointmentDay from "./appointment-day";
+import { useFilterAppointment } from "@/hooks/use-filter-appointment-store";
 
 type AppointmentDataProps = {
     groupedAppointments: GroupedAppointmentCustomerProps[];

@@ -4,8 +4,8 @@ import { Table } from "@tanstack/react-table"
 
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
-import { DataTableFacetedFilter } from "./DataTableFacetedFilter"
-import { DataTableViewOptions } from "./DataTableViewOptions"
+import { DataTableFacetedFilter } from "./datatable-faceted-filter"
+import { DataTableViewOptions } from "./datatable-view-options"
 import { Cross } from "lucide-react"
 import { priorities, statuses } from "./data/data"
 

@@ -10,10 +10,10 @@ import {
 } from "@/components/ui/card"
 import { Button } from "../ui/button";
 import { Pen, Trash2 } from "lucide-react";
-import { AppointmentCustomerProps } from "@/types/AppointmentCustomerProps";
-import { useModal } from "@/hooks/useModalStore";
+import { AppointmentCustomerProps } from "@/types/appointment-customer-props";
+import { useModal } from "@/hooks/use-modal-store";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { getNameFeedback } from "@/utils/globalFunctions";
+import { getNameFeedback } from "@/utils/global-functions";
 
 interface AppointmentCardProps {
     data: AppointmentCustomerProps;

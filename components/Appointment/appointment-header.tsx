@@ -1,7 +1,7 @@
 "use client";
 
 import { CalendarIcon, Plus } from "lucide-react";
-import { useModal } from "@/hooks/useModalStore";
+import { useModal } from "@/hooks/use-modal-store";
 
 import { Button } from "../ui/button";
 import { Popover, PopoverContent } from "../ui/popover";
@@ -11,7 +11,7 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { ptBR } from "date-fns/locale/pt-BR";
 import { format } from "date-fns";
-import { useFilterAppointment } from "@/hooks/useFilterAppointmentStore";
+import { useFilterAppointment } from "@/hooks/use-filter-appointment-store";
 
 const AppointmentHeader = () => {
     const [openPopover, setOpenPopover] = useState<boolean>(false);

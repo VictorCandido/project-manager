@@ -1,4 +1,4 @@
-import { useModal } from "@/hooks/useModalStore";
+import { useModal } from "@/hooks/use-modal-store";
 
 import {
     AlertDialog,
@@ -12,8 +12,8 @@ import {
 } from "@/components/ui/alert-dialog"
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { deleteCustomer } from "@/services/CustomerService";
-import { listAppointmentsByCustomer } from "@/services/AppointmentService";
+import { deleteCustomer } from "@/services/customer-service";
+import { listAppointmentsByCustomer } from "@/services/appointment-service";
 
 const DeleteCustomerModal = () => {
     const { isOpen, onClose, type, data: { customerData } } = useModal();

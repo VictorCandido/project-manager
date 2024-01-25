@@ -1,4 +1,4 @@
-import { SidebarNav } from "@/components/ControlPanel/SidebarNav"
+import { SidebarNav } from "@/components/ControlPanel/sidebar-nav"
 import { Separator } from "@/components/ui/separator"
 import { Metadata } from "next"
 

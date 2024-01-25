@@ -1,4 +1,4 @@
-import ComingSoon from "@/components/ComingSoon/ComingSoon";
+import ComingSoon from "@/components/ComingSoon/coming-soon";
 
 export default function PainelControle() {
   return (

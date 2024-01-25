@@ -1,5 +1,5 @@
-import { CustomersDatatableColumns } from "@/components/ControlPanel/customers/CustomersDatatableColumns";
-import { CustomersDatatable } from "@/components/ControlPanel/customers/CustomersDatatable";
+import { CustomersDatatableColumns } from "@/components/ControlPanel/customers/customers-datatable-columns";
+import { CustomersDatatable } from "@/components/ControlPanel/customers/customers-datatable";
 import { db } from "@/lib/db"
 
 export default async function Clientes() {

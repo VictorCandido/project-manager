@@ -1,4 +1,4 @@
-import { AppointmentCustomerProps } from '@/types/AppointmentCustomerProps';
+import { AppointmentCustomerProps } from '@/types/appointment-customer-props';
 import { Customer } from '@prisma/client';
 import { create } from 'zustand';
 
