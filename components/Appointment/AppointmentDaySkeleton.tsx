@@ -4,7 +4,7 @@ import AppointmentCardSkeleton from "./AppointmentCardSkeleton";
 const AppointmentDaySkeleton = () => {
     return (
         <div className="flex flex-col gap-4">
-            <Skeleton className="h-4 w-64"/>
+            <Skeleton className="h-4 w-64" />
 
             <AppointmentCardSkeleton />
             <AppointmentCardSkeleton />
@@ -12,5 +12,5 @@ const AppointmentDaySkeleton = () => {
         </div>
     );
 }
- 
+
 export default AppointmentDaySkeleton;

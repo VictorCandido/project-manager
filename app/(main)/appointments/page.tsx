@@ -1,13 +1,13 @@
 import { Suspense } from "react";
+import { redirect } from "next/navigation";
+import { Metadata } from "next";
 
 import AppointmentSkeleton from "@/components/Appointment/AppointmentDaySkeleton";
 import AppointmentData from "@/components/Appointment/AppointmentData";
 import AppointmentHeader from "@/components/Appointment/AppointmentHeader";
 import { currentProfile } from "@/lib/currentProfile";
-import { redirect } from "next/navigation";
 import { AppointmentCustomerProps } from "@/types/AppointmentCustomerProps";
 import { GroupedAppointmentCustomerProps } from "@/types/GroupedAppointmentCustomerProps";
-import { Metadata } from "next";
 import { listAppointments } from "@/services/AppointmentService";
 
 export const metadata: Metadata = {
