@@ -24,18 +24,23 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { useEffect, useState } from "react"
 import { Input } from "@/components/ui/input"
-import { DataTableViewOptions } from "@/components/Datatable/datatable-view-options"
-import { DataTablePagination } from "@/components/Datatable/datatable-pagination"
+import { DataTableViewOptions } from "@/components/datatable/datatable-view-options"
+import { DataTablePagination } from "@/components/datatable/datatable-pagination"
+import { Button } from "@/components/ui/button"
+import { Plus } from "lucide-react"
+import { useModal } from "@/hooks/use-modal-store"
 
-interface UsersDatatableProps<TData, TValue> {
+interface CustomersDatatableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
 }
 
-export function UsersDatatable<TData, TValue>({ columns, data }: UsersDatatableProps<TData, TValue>) {
+export function CustomersDatatable<TData, TValue>({ columns, data }: CustomersDatatableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+
+  const { onOpen } = useModal();
 
   const table = useReactTable({
     data,
@@ -55,7 +60,7 @@ export function UsersDatatable<TData, TValue>({ columns, data }: UsersDatatableP
   });
 
   useEffect(() => {
-    table.setColumnVisibility({ id: false, userId: false, name: true, email: true, actions: true });
+    table.setColumnVisibility({ id: false, name: true });
   }, [table]);
 
 
@@ -72,6 +77,13 @@ export function UsersDatatable<TData, TValue>({ columns, data }: UsersDatatableP
         />
 
         <DataTableViewOptions table={table} />
+
+        <Button
+          className="ml-4"
+          onClick={() => onOpen('newCustomer')}
+        >
+          <Plus className="w-5 h-5 mr-1" /> Novo Cliente
+        </Button>
       </div>
 
       <div className="rounded-md border">

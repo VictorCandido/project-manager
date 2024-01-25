@@ -1,58 +1,67 @@
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-import UploadComponent from "@/components/UploadThing/upload-component";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useModal } from "@/hooks/use-modal-store";
 import { CustomerSchemaType, customerSchema } from "@/schemas/customer-schema";
-import { createCustomer } from "@/services/customer-service";
+import UploadComponent from "@/components/uploadthing/upload-component";
+import { updateCustomer } from "@/services/customer-service";
 
-const NewCustomerModal = () => {
-    const { isOpen, onClose, type } = useModal();
+const EditCustomerModal = () => {
+    const { isOpen, onClose, type, data: { customerData } } = useModal();
     const router = useRouter();
 
     const form = useForm<CustomerSchemaType>({
         resolver: zodResolver(customerSchema),
         defaultValues: {
-            imageUrl: '',
-            name: '',
-        }
+            name: "",
+            imageUrl: "",
+        },
     });
 
-    const isModalOpen = isOpen && type === "newCustomer";
+    const isModalOpen = isOpen && type === "editCustomer";
     const isLoading = form.formState.isSubmitting;
 
     async function onSubmit(values: CustomerSchemaType) {
         try {
-            await createCustomer(values);
+            if (customerData) {
+                await updateCustomer(values, customerData?.id);
 
-            toast.success("Cliente cadastrado com sucesso!");
-            form.reset();
-            router.refresh();
-            onClose();
+                toast.success("Cliente atualizado com sucesso!");
+                form.reset();
+                router.refresh();
+                onClose();
+            }
         } catch (error) {
-            toast.error('Falha ao registrar cliente. Por favor tente novamente.');
+            toast.error('Falha ao atualizar cliente. Por favor tente novamente.');
         }
     }
 
     function handleClose() {
-        form.reset();
         onClose();
     }
+
+    useEffect(() => {
+        if (customerData) {
+            form.setValue('name', customerData.name);
+            form.setValue('imageUrl', customerData.imageUrl || '');
+        }
+    }, [form, customerData]);
 
     return (
         <Dialog open={isModalOpen} onOpenChange={handleClose}>
             <DialogContent className="sm:max-w-xl">
                 <DialogHeader>
-                    <DialogTitle>Novo Cliente</DialogTitle>
+                    <DialogTitle>Editar Cliente</DialogTitle>
                     <DialogDescription>
-                        Insira os dados do novo cliente.
+                        Insira os dados do cliente.
                     </DialogDescription>
                 </DialogHeader>
 
@@ -111,4 +120,4 @@ const NewCustomerModal = () => {
     );
 }
 
-export default NewCustomerModal;
+export default EditCustomerModal;

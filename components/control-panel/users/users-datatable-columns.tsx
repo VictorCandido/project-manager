@@ -3,7 +3,7 @@
 import { Profile } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import UsersDatatableDropdownMenu from "./users-datatable-dropdown-menu";
-import { DataTableColumnHeader } from "@/components/Datatable/datatable-column-header";
+import { DataTableColumnHeader } from "@/components/datatable/datatable-column-header";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export const UsersDatatableColumns: ColumnDef<Profile>[] = [

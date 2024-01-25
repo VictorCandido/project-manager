@@ -2,13 +2,13 @@
 
 import { Boxes, ChevronLeft, ChevronRight, Search } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
-import SidebarItem from "./sidebar-item";
 import { NavigateContext } from "@/contexts/navigate-context";
 import { Salsa } from "next/font/google";
 import { menuItems } from "@/utils/menu-items";
-import { ThemeToggle } from "../ThemeToggle/theme-toggle";
+import { ThemeToggle } from "../theme-toggle/theme-toggle";
 import { UserButton } from "@clerk/nextjs";
 import { Button } from "../ui/button";
+import SidebarItem from "./sidebar-item";
 import CommandSidebar from "./command-sidebar";
 
 const salsa = Salsa({
