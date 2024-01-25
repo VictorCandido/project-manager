@@ -23,7 +23,7 @@ export async function POST(req: Request) {
 
     try {
         const profile = await currentProfile();
-        const { name } = await req.json();
+        const { name, imageUrl } = await req.json();
 
         if (!profile) {
             response = new ResponseModel(true, CodeResponseEnum.UNAUTHORIZED, 'Sem permissão para realizar tarefa.', {});
@@ -33,6 +33,7 @@ export async function POST(req: Request) {
         const newCustomer = await db.customer.create({
             data: {
                 name,
+                imageUrl: imageUrl || null
             }
         });
 

@@ -10,7 +10,7 @@ export async function PUT(req: Request, { params }: { params: { customerId: stri
 
     try {
         const profile = await currentProfile();
-        const { name } = await req.json();
+        const { name, imageUrl } = await req.json();
 
         if (!profile) {
             response = new ResponseModel(true, CodeResponseEnum.UNAUTHORIZED, 'Sem permissão para realizar tarefa.', {});
@@ -24,7 +24,7 @@ export async function PUT(req: Request, { params }: { params: { customerId: stri
 
         const updatedCustomer = await db.customer.update({
             where: { id: params.customerId },
-            data: { name }
+            data: { name, imageUrl }
         });
 
         response = new ResponseModel(false, CodeResponseEnum.CREATED, 'Cliente atualizado.', updatedCustomer);

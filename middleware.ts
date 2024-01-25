@@ -10,10 +10,6 @@ export default authMiddleware({
 
       apiRoutes: ['/(api|trpc)(.*)'],
       afterAuth(auth, req, evt) {
-            console.log('##auth', auth);
-            console.log('##req', req);
-            console.log('##evt', evt);
-
             if (auth.isApiRoute || auth.isPublicRoute) {
                   return NextResponse.next();
             }

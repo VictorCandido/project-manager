@@ -1,53 +1,45 @@
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { useModal } from "@/hooks/useModalStore";
-import ResponseModel from "@/models/ResponseModel";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Customer } from "@prisma/client";
-import axios from "axios";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-const formSchema = z.object({
-    name: z.string().min(1, { message: "Informe o nome" }),
-});
-
-type ProfileType = z.infer<typeof formSchema>;
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useModal } from "@/hooks/useModalStore";
+import { CustomerSchemaType, customerSchema } from "@/schemas/CustomerSchema";
+import UploadComponent from "@/components/UploadThing/UploadComponent";
+import { updateCustomer } from "@/services/CustomerService";
 
 const EditCustomerModal = () => {
     const { isOpen, onClose, type, data: { customerData } } = useModal();
     const router = useRouter();
 
-    const form = useForm<ProfileType>({
-        resolver: zodResolver(formSchema),
+    const form = useForm<CustomerSchemaType>({
+        resolver: zodResolver(customerSchema),
         defaultValues: {
             name: "",
+            imageUrl: "",
         },
     });
 
     const isModalOpen = isOpen && type === "editCustomer";
     const isLoading = form.formState.isSubmitting;
 
-    async function onSubmit(values: ProfileType) {
+    async function onSubmit(values: CustomerSchemaType) {
         try {
-            const { data } = await axios.put<ResponseModel<Customer>>(`/api/customer/${customerData?.id}`, values);
+            if (customerData) {
+                await updateCustomer(values, customerData?.id);
 
-            if (data.error) {
-                throw data.data;
+                toast.success("Cliente atualizado com sucesso!");
+                form.reset();
+                router.refresh();
+                onClose();
             }
-
-            toast.success("Cliente atualizado com sucesso!");
-            form.reset();
-            router.refresh();
-            onClose();
         } catch (error) {
-            console.log('Falha ao atualizar cliente - ', error);
             toast.error('Falha ao atualizar cliente. Por favor tente novamente.');
         }
     }
@@ -59,6 +51,7 @@ const EditCustomerModal = () => {
     useEffect(() => {
         if (customerData) {
             form.setValue('name', customerData.name);
+            form.setValue('imageUrl', customerData.imageUrl || '');
         }
     }, [form, customerData]);
 
@@ -74,6 +67,27 @@ const EditCustomerModal = () => {
 
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                        <FormField
+                            control={form.control}
+                            name="imageUrl"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Logo</FormLabel>
+                                    <div className="flex items-center justify-center text-center">
+
+                                        <FormControl>
+                                            <UploadComponent
+                                                value={field.value}
+                                                onChange={field.onChange}
+                                            />
+                                        </FormControl>
+
+                                    </div>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
                         <FormField
                             control={form.control}
                             name="name"
