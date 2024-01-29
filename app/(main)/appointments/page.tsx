@@ -7,9 +7,9 @@ import { listAppointments } from "@/services/appointment-service";
 
 import { AppointmentCustomerProps } from "@/types/appointment-customer-props";
 import { GroupedAppointmentCustomerProps } from "@/types/grouped-appointment-customer-props";
-import AppointmentHeader from "@/components/appointment/appointment-header";
-import AppointmentData from "@/components/appointment/appointment-data";
-import AppointmentDaySkeleton from "@/components/appointment/appointment-day-skeleton";
+import AppointmentHeader from "@/componentes/appointment/appointment-header";
+import AppointmentData from "@/componentes/appointment/appointment-data";
+import AppointmentDaySkeleton from "@/componentes/appointment/appointment-day-skeleton";
 
 export const metadata: Metadata = {
   title: "Apontamentos | Project Manager"

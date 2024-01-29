@@ -3,7 +3,7 @@ import { Roboto } from 'next/font/google'
 import type { Metadata } from 'next'
 
 import './globals.css'
-import { Toaster } from '@/components/ui/sonner';
+import { Toaster } from '@/componentes/ui/sonner';
 import ModalsProvider from "@/providers/modals-provider";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { NavigateProvider } from "@/contexts/navigate-context";
