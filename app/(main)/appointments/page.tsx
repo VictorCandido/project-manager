@@ -2,14 +2,14 @@ import { Suspense } from "react";
 import { redirect } from "next/navigation";
 import { Metadata } from "next";
 
-import AppointmentSkeleton from "@/components/appointment/appointment-day-skeleton";
-import AppointmentData from "@/components/appointment/appointment-data";
-import AppointmentHeader from "@/components/appointment/appointment-header";
 import { currentProfile } from "@/lib/current-profile";
 import { listAppointments } from "@/services/appointment-service";
 
 import { AppointmentCustomerProps } from "@/types/appointment-customer-props";
 import { GroupedAppointmentCustomerProps } from "@/types/grouped-appointment-customer-props";
+import AppointmentHeader from "@/components/appointment/appointment-header";
+import AppointmentData from "@/components/appointment/appointment-data";
+import AppointmentDaySkeleton from "@/components/appointment/appointment-day-skeleton";
 
 export const metadata: Metadata = {
   title: "Apontamentos | Project Manager"
@@ -68,7 +68,7 @@ export default async function PainelControle() {
       </div>
 
       {/* CONTENT */}
-      <Suspense fallback={<AppointmentSkeleton />}>
+      <Suspense fallback={<AppointmentDaySkeleton />}>
         <AppointmentData groupedAppointments={groupedAppointments} />
       </Suspense>
     </div>

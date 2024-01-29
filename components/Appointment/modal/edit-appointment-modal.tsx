@@ -33,7 +33,7 @@ import {
 import { AppointmentSchema, AppointmentSchemaType } from "@/schemas/appointment-schema";
 import { formatTime } from "@/utils/global-functions";
 import { updateAppointment } from "@/services/appointment-service";
-import PopoverCustomers from "@/components/PopoverCustomers";
+import PopoverCustomers from "@/components/popover-customers";
 
 const EditAppointmentModal = () => {
     const [openDatePopover, setOpenDatePopover] = useState<boolean>(false);
