@@ -9,7 +9,7 @@ import {
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
-} from "@/componentes/ui/alert-dialog"
+} from "@/components/ui/alert-dialog"
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { deleteCustomer } from "@/services/customer-service";

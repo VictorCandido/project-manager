@@ -1,5 +1,5 @@
-import { UsersDatatableColumns } from "@/componentes/control-panel/users/users-datatable-columns";
-import { UsersDatatable } from "@/componentes/control-panel/users/users-datatable";
+import { UsersDatatableColumns } from "@/components/control-panel/users/users-datatable-columns";
+import { UsersDatatable } from "@/components/control-panel/users/users-datatable";
 import { db } from "@/lib/db"
 import { toast } from "sonner";
 

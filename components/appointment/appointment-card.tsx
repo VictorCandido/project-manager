@@ -7,7 +7,7 @@ import {
     CardFooter,
     CardHeader,
     CardTitle,
-} from "@/componentes/ui/card"
+} from "@/components/ui/card"
 import { Button } from "../ui/button";
 import { Pen, Trash2 } from "lucide-react";
 import { AppointmentCustomerProps } from "@/types/appointment-customer-props";

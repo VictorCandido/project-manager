@@ -8,8 +8,8 @@ import { useState } from "react";
 import { toast } from "sonner"
 import { useRouter } from "next/navigation";
 
-import { Button } from "@/componentes/ui/button"
-import { Input } from "@/componentes/ui/input"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import { Textarea } from "../../ui/textarea";
 import { Popover, PopoverContent, PopoverTrigger } from "../../ui/popover";
 import { cn } from "@/lib/utils";
@@ -21,7 +21,7 @@ import {
     DialogFooter,
     DialogHeader,
     DialogTitle,
-} from "@/componentes/ui/dialog"
+} from "@/components/ui/dialog"
 import {
     Form,
     FormControl,
@@ -29,11 +29,11 @@ import {
     FormItem,
     FormLabel,
     FormMessage
-} from "@/componentes/ui/form"
+} from "@/components/ui/form"
 import { AppointmentSchema, AppointmentSchemaType } from "@/schemas/appointment-schema";
 import { formatTime } from "@/utils/global-functions";
 import { createAppointment } from "@/services/appointment-service";
-import PopoverCustomers from "@/componentes/popover-customers";
+import PopoverCustomers from "@/components/popover-customers";
 
 const NewAppointmentModal = () => {
     const [openDatePopover, setOpenDatePopover] = useState<boolean>(false);

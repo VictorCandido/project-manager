@@ -1,7 +1,7 @@
 import { Pencil, MoreHorizontal, Trash2 } from "lucide-react";
 
-import { Button } from "@/componentes/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/componentes/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Customer } from "@prisma/client";
 import { useModal } from "@/hooks/use-modal-store";
 

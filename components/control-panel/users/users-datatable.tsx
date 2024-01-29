@@ -20,27 +20,22 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/componentes/ui/table"
-import { ScrollArea } from "@/componentes/ui/scroll-area"
+} from "@/components/ui/table"
+import { ScrollArea } from "@/components/ui/scroll-area"
 import { useEffect, useState } from "react"
-import { Input } from "@/componentes/ui/input"
-import { DataTableViewOptions } from "@/componentes/datatable/datatable-view-options"
-import { DataTablePagination } from "@/componentes/datatable/datatable-pagination"
-import { Button } from "@/componentes/ui/button"
-import { Plus } from "lucide-react"
-import { useModal } from "@/hooks/use-modal-store"
+import { Input } from "@/components/ui/input"
+import { DataTableViewOptions } from "@/components/datatable/datatable-view-options"
+import { DataTablePagination } from "@/components/datatable/datatable-pagination"
 
-interface CustomersDatatableProps<TData, TValue> {
+interface UsersDatatableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
 }
 
-export function CustomersDatatable<TData, TValue>({ columns, data }: CustomersDatatableProps<TData, TValue>) {
+export function UsersDatatable<TData, TValue>({ columns, data }: UsersDatatableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-
-  const { onOpen } = useModal();
 
   const table = useReactTable({
     data,
@@ -60,7 +55,7 @@ export function CustomersDatatable<TData, TValue>({ columns, data }: CustomersDa
   });
 
   useEffect(() => {
-    table.setColumnVisibility({ id: false, name: true });
+    table.setColumnVisibility({ id: false, userId: false, name: true, email: true, actions: true });
   }, [table]);
 
 
@@ -77,13 +72,6 @@ export function CustomersDatatable<TData, TValue>({ columns, data }: CustomersDa
         />
 
         <DataTableViewOptions table={table} />
-
-        <Button
-          className="ml-4"
-          onClick={() => onOpen('newCustomer')}
-        >
-          <Plus className="w-5 h-5 mr-1" /> Novo Cliente
-        </Button>
       </div>
 
       <div className="rounded-md border">

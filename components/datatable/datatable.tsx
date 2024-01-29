@@ -4,9 +4,9 @@ import { useState } from "react"
 
 import { ColumnDef, ColumnFiltersState, SortingState, VisibilityState, flexRender, getCoreRowModel, getFacetedRowModel, getFacetedUniqueValues, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable, } from "@tanstack/react-table"
 
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, } from "@/componentes/ui/table"
-import { DataTableToolbar } from "@/componentes/datatable/datatable-toolbar"
-import { DataTablePagination } from "@/componentes/datatable/datatable-pagination"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, } from "@/components/ui/table"
+import { DataTableToolbar } from "@/components/datatable/datatable-toolbar"
+import { DataTablePagination } from "@/components/datatable/datatable-pagination"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
