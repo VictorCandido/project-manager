@@ -1,7 +1,7 @@
 services:
-  nextjs-app:
+  nextjs-app-dev:
     image: node:20.11.0
-    container_name: nextjs-container
+    container_name: nextjs-container-dev
     working_dir: /app
     volumes:
       - .:/app
@@ -12,7 +12,21 @@ services:
       - DATABASE_URL=postgresql://postgres:root@postgres-db:5432/project-manager
     command: "npm run dev"
     networks:
-      - project-manager-network
+      - project-manager-network-dev
+
+  nextjs-app-build:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nextjs-container-build
+    ports:
+      - "3001:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://postgres:root@postgres-db:5432/project-manager
+    command: "npm start"
+    networks:
+      - project-manager-network-build
 
   postgres-db:
     image: postgres:13
@@ -25,10 +39,14 @@ services:
     ports:
       - "5432:5432"
     networks:
-      - project-manager-network
+      - project-manager-network-dev
+      - project-manager-network-build
 
 networks:
-  project-manager-network:
+  project-manager-network-dev:
+    driver: bridge
+
+  project-manager-network-build:
     driver: bridge
 
 volumes:
