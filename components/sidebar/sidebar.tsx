@@ -6,10 +6,12 @@ import { NavigateContext } from "@/contexts/navigate-context";
 import { Salsa } from "next/font/google";
 import { menuItems } from "@/utils/menu-items";
 import { ThemeToggle } from "../theme-toggle/theme-toggle";
-import { UserButton } from "@clerk/nextjs";
+import { UserButton, auth } from "@clerk/nextjs";
 import { Button } from "../ui/button";
 import SidebarItem from "./sidebar-item";
 import CommandSidebar from "./command-sidebar";
+import { getProfileByUserId } from "@/services/profile-service";
+import { currentProfile } from "@/lib/current-profile";
 
 const salsa = Salsa({
     weight: '400',
@@ -20,7 +22,11 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
     const { isOpenSidebar, setIsOpenSidebar } = useContext(NavigateContext);
     const [open, setOpen] = useState(false);
 
+    const [userData, setUserData] = useState<{ username: string, mail: string } | null>(null);
+
     useEffect(() => {
+        getCurrentProfileData();
+
         const down = (e: KeyboardEvent) => {
             if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
                 e.preventDefault()
@@ -31,6 +37,21 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
         document.addEventListener("keydown", down);
         return () => document.removeEventListener("keydown", down)
     }, []);
+
+    function getCurrentProfileData() {
+        // const { userId } = auth();
+
+        currentProfile().then((data) => {
+            if (!data) return;
+
+            setUserData({
+                username: data.name,
+                mail: data?.email
+            });
+        }).catch((error) => {
+            console.log('Falha ao listardar perfil - ', error);
+        });
+    }
 
     return (
         <>
@@ -90,8 +111,8 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
                             ${isOpenSidebar ? 'w-52 ml-3' : 'w-0'}
                         `}>
                             <div className="leading-4">
-                                <h4 className="font-semibold">Víctor Cândido</h4>
-                                <span className="text-xs text-gray-600 dark:text-gray-400">victorev@outlook.com</span>
+                                <h4 className="font-semibold">{userData?.username || 'Carregando...'}</h4>
+                                <span className="text-xs text-gray-600 dark:text-gray-400">{userData?.mail || 'Carregando...'}</span>
                             </div>
 
                             <div className={`${!isOpenSidebar && 'hidden'}`}>
