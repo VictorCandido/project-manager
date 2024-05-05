@@ -1,17 +1,16 @@
 "use client";
 
-import { Boxes, ChevronLeft, ChevronRight, Search } from "lucide-react";
-import { useContext, useEffect, useState } from "react";
 import { NavigateContext } from "@/contexts/navigate-context";
-import { Salsa } from "next/font/google";
-import { menuItems } from "@/utils/menu-items";
-import { ThemeToggle } from "../theme-toggle/theme-toggle";
-import { UserButton, auth } from "@clerk/nextjs";
-import { Button } from "../ui/button";
-import SidebarItem from "./sidebar-item";
-import CommandSidebar from "./command-sidebar";
-import { getProfileByUserId } from "@/services/profile-service";
 import { currentProfile } from "@/lib/current-profile";
+import { menuItems } from "@/utils/menu-items";
+import { UserButton } from "@clerk/nextjs";
+import { Boxes, ChevronLeft, ChevronRight, Search } from "lucide-react";
+import { Salsa } from "next/font/google";
+import { useContext, useEffect, useState } from "react";
+import { ThemeToggle } from "../theme-toggle/theme-toggle";
+import { Button } from "../ui/button";
+import CommandSidebar from "./command-sidebar";
+import SidebarItem from "./sidebar-item";
 
 const salsa = Salsa({
     weight: '400',
